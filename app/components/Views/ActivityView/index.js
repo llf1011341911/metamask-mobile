@@ -5,7 +5,7 @@ import ScrollableTabView from 'react-native-scrollable-tab-view';
 import { connect } from 'react-redux';
 import { useNavigation } from '@react-navigation/native';
 import { getHasOrders } from '../../../reducers/fiatOrders';
-import getNavbarOptions from '../../UI/Navbar';
+import {getBackNavbarOptions} from '../../UI/Navbar';
 import TransactionsView from '../TransactionsView';
 import TabBar from '../../Base/TabBar';
 import { strings } from '../../../../locales/i18n';
@@ -29,7 +29,7 @@ function ActivityView({ hasOrders }) {
     () => {
       const title =
         hasOrders ?? false ? 'activity_view.title' : 'transactions_view.title';
-      navigation.setOptions(getNavbarOptions(title, false, drawerRef, colors));
+      navigation.setOptions(getBackNavbarOptions(title, false, drawerRef, colors));
     },
     /* eslint-disable-next-line */
     [navigation, hasOrders, colors],

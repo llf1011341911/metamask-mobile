@@ -133,7 +133,7 @@ const HomeTabs = () => {
             component={WalletTabHome}
             options={{ tabBarVisible: false }}
           />
-          <Tab.Screen
+          {/* <Tab.Screen
             name="BrowserTabHome"
             component={BrowserTabHome}
             options={{ tabBarVisible: false }}
@@ -142,7 +142,7 @@ const HomeTabs = () => {
             name="TransactionsHome"
             component={TransactionsHome}
             options={{ tabBarVisible: false }}
-          />
+          /> */}
         </Tab.Navigator>
       </Drawer>
     </DrawerContext.Provider>
@@ -500,6 +500,16 @@ const MainNavigator = () => (
       )}
       // eslint-disable-next-line react-native/no-inline-styles
       headerStyle={{ borderBottomWidth: 0 }}
+    />
+    <Stack.Screen
+      name="BrowserTabHome"
+      component={BrowserTabHome}
+      options={{ tabBarVisible: true }}
+    />
+    <Stack.Screen
+      name="TransactionsHome"
+      component={TransactionsHome}
+      options={{ tabBarVisible: true }}
     />
   </Stack.Navigator>
 );

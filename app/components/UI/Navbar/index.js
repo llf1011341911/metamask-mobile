@@ -160,6 +160,76 @@ export default function getNavbarOptions(
 
 /**
  * Function that returns the navigation options
+ * This is used by views that will show our custom navbar
+ * which contains accounts icon, Title or Metamask Logo and current network, and back icon
+ *
+ * @param {string} title - Title in string format
+ * @param {Object} navigation - Navigation object required to push new views
+ * @param {bool} disableNetwork - Boolean that specifies if the network can be changed, defaults to false
+ * @returns {Object} - Corresponding navbar options containing headerTitle, headerLeft, headerTruncatedBackTitle and headerRight
+ */
+export function getBackNavbarOptions(
+  title,
+  disableNetwork = false,
+  drawerRef,
+  themeColors,
+) {
+  const innerStyles = StyleSheet.create({
+    headerStyle: {
+      backgroundColor: themeColors.background.default,
+      shadowColor: importedColors.transparent,
+      elevation: 0,
+    },
+    headerIcon: {
+      color: themeColors.primary.default,
+    },
+  });
+
+
+  return {
+    headerTitle: () => (
+      <NavbarTitle title={title} disableNetwork={disableNetwork} />
+    ),
+    headerLeft: () =>
+    Device.isAndroid() ? (
+      // eslint-disable-next-line react/jsx-no-bind
+      <TouchableOpacity
+        onPress={() => {
+          navigation.pop();
+          onPop?.();
+        }}
+        style={styles.backButton}
+      >
+        <IonicIcon
+          name={'md-arrow-back'}
+          size={24}
+          style={innerStyles.headerIcon}
+        />
+      </TouchableOpacity>
+    ) : (
+      // eslint-disable-next-line react/jsx-no-bind
+      <TouchableOpacity
+        onPress={() => {
+          navigation.pop();
+          onPop?.();
+        }}
+        style={styles.backButton}
+      >
+        <IonicIcon
+          name="ios-close"
+          size={38}
+          style={[innerStyles.headerIcon, styles.backIconIOS]}
+        />
+      </TouchableOpacity>
+    ),
+    headerRight: () => <AccountRightButton />,
+    headerStyle: innerStyles.headerStyle,
+    headerTintColor: themeColors.primary.default,
+  };
+}
+
+/**
+ * Function that returns the navigation options
  * This is used by views that will show our custom navbar which contains Title
  *
  * @param {string} title - Title in string format
@@ -610,16 +680,29 @@ export function getBrowserViewNavbarOptions(
 
   return {
     gestureEnabled: false,
-    headerLeft: () => (
+    headerLeft: () =>
+    Device.isAndroid() ? (
+      // eslint-disable-next-line react/jsx-no-bind
       <TouchableOpacity
         onPress={onPress}
-        style={styles.hamburgerButton}
-        testID={'hamburger-menu-button-browser'}
+        style={styles.backButton}
       >
         <IonicIcon
-          name={Device.isAndroid() ? 'md-menu' : 'ios-menu'}
-          size={Device.isAndroid() ? 24 : 28}
+          name={'md-arrow-back'}
+          size={24}
           style={innerStyles.headerIcon}
+        />
+      </TouchableOpacity>
+    ) : (
+      // eslint-disable-next-line react/jsx-no-bind
+      <TouchableOpacity
+        onPress={onPress}
+        style={styles.backButton}
+      >
+        <IonicIcon
+          name="ios-close"
+          size={38}
+          style={[innerStyles.headerIcon, styles.backIconIOS]}
         />
       </TouchableOpacity>
     ),

@@ -318,6 +318,18 @@ class AccountOverview extends PureComponent {
     });
   };
 
+  // Games Handle
+  onGames =() =>{
+    // this.props.navigation.navigate('GamesStack');
+    // InteractionManager.runAfterInteractions(() => {
+    //   Analytics.trackEvent(ANALYTICS_EVENT_OPTS.WALLET_BUY_ETH);
+    //   AnalyticsV2.trackEvent(AnalyticsV2.ANALYTICS_EVENTS.ONRAMP_OPENED, {
+    //     button_location: 'Home Screen',
+    //     button_copy: 'Games',
+    //   });
+    // });
+  };
+
   goToSwaps = () =>
     this.props.navigation.navigate('Swaps', {
       screen: 'SwapsAmountView',
@@ -479,6 +491,14 @@ class AccountOverview extends PureComponent {
                   isNetworkAllowed={isSwapsAllowed(chainId)}
                   onPress={this.goToSwaps}
                   isAssetAllowed
+                />
+              )}
+              {/* add games */}
+              {allowedToBuy(chainId) && (
+                <AssetActionButton
+                  icon="buy"
+                  onPress={this.onGames}
+                  label={strings('asset_overview.games_button')}
                 />
               )}
             </View>
