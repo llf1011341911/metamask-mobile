@@ -754,7 +754,7 @@ class Settings extends PureComponent {
   renderPasswordSection = () => {
     const { styles } = this.getStyles();
     return (
-      <View style={styles.setting} testID={CHANGE_PASSWORD_TITLE_ID}>
+      <View style={[styles.setting, styles.firstSetting]} testID={CHANGE_PASSWORD_TITLE_ID}>
         <Text style={styles.title}>
           {strings('password_reset.password_title')}
         </Text>
@@ -1189,7 +1189,7 @@ class Settings extends PureComponent {
       >
         <View style={styles.inner}>
           <Heading first>{strings('app_settings.security_heading')}</Heading>
-          {this.renderProtectYourWalletSection()}
+          {/* {this.renderProtectYourWalletSection()} */}
           {this.renderPasswordSection()}
           {this.renderAutoLockSection()}
           {biometryType && this.renderBiometricOptionsSection()}
@@ -1201,13 +1201,13 @@ class Settings extends PureComponent {
           {this.renderClearPrivacySection()}
           {this.renderClearBrowserHistorySection()}
           {this.renderClearCookiesSection()}
-          {this.renderPrivacyModeSection()}
-          {this.renderMetaMetricsSection()}
+          {/* {this.renderPrivacyModeSection()} */}
+          {/* {this.renderMetaMetricsSection()} */}
           {this.renderThirdPartySection()}
           {this.renderApprovalModal()}
           {this.renderHistoryModal()}
           {this.renderCookiesModal()}
-          {this.isMainnet() && this.renderOpenSeaSettings()}
+          {/* {this.isMainnet() && this.renderOpenSeaSettings()} */}
           {this.renderHint()}
         </View>
       </ScrollView>
