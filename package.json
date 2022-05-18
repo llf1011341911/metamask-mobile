@@ -388,8 +388,8 @@
     "fs": "react-native-level-fs"
   },
   "engines": {
-    "node": "^14.0.0",
-    "yarn": "^1.22.0"
+    "node": "14.15.0",
+    "yarn": "1.22.0"
   },
   "lavamoat": {
     "allowScripts": {
