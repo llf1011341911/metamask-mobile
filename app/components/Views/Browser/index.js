@@ -47,7 +47,7 @@ const Browser = (props) => {
   useEffect(
     () => {
       navigation.setOptions(
-        getBrowserViewNavbarOptions(navigation, route, drawerRef, colors),
+        getBrowserViewNavbarOptions(navigation, route, colors),
       );
     },
     /* eslint-disable-next-line */

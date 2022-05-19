@@ -29,7 +29,7 @@ function ActivityView({ hasOrders }) {
     () => {
       const title =
         hasOrders ?? false ? 'activity_view.title' : 'transactions_view.title';
-      navigation.setOptions(getBackNavbarOptions(title, false, drawerRef, colors));
+      navigation.setOptions(getBackNavbarOptions(navigation,title, false, colors));
     },
     /* eslint-disable-next-line */
     [navigation, hasOrders, colors],

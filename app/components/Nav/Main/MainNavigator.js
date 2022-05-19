@@ -103,15 +103,15 @@ const WalletTabHome = () => (
   </Stack.Navigator>
 );
 
-const BrowserTabHome = () => (
+const BrowserHome = () => (
   <Stack.Navigator>
-    <Stack.Screen name="BrowserView" component={Browser} />
+    <Stack.Screen name="BrowserView" component={Browser} options ={Browser.navigationOptions}/>
   </Stack.Navigator>
 );
 
 const TransactionsHome = () => (
   <Stack.Navigator>
-    <Stack.Screen name="TransactionsView" component={ActivityView} />
+    <Stack.Screen name="TransactionsView" component={ActivityView} options ={ActivityView.navigationOptions}/>
   </Stack.Navigator>
 );
 
@@ -501,16 +501,8 @@ const MainNavigator = () => (
       // eslint-disable-next-line react-native/no-inline-styles
       headerStyle={{ borderBottomWidth: 0 }}
     />
-    <Stack.Screen
-      name="BrowserTabHome"
-      component={BrowserTabHome}
-      options={{ tabBarVisible: true }}
-    />
-    <Stack.Screen
-      name="TransactionsHome"
-      component={TransactionsHome}
-      options={{ tabBarVisible: true }}
-    />
+    <Stack.Screen name="BrowserHome"  component={BrowserHome} />
+    <Stack.Screen name="TransactionsHome" component={TransactionsHome} />
   </Stack.Navigator>
 );
 

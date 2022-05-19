@@ -30,6 +30,7 @@ import Device from '../../../util/device';
 import { isGatewayUrl } from '../../../lib/ens-ipfs/resolver';
 import { getHost } from '../../../util/browser';
 import { BACK_ARROW_BUTTON_ID } from '../../../constants/test-ids';
+import Logger from '../../../util/Logger';
 
 const { HOMEPAGE_URL } = AppConstants;
 
@@ -169,9 +170,9 @@ export default function getNavbarOptions(
  * @returns {Object} - Corresponding navbar options containing headerTitle, headerLeft, headerTruncatedBackTitle and headerRight
  */
 export function getBackNavbarOptions(
+  navigation,
   title,
   disableNetwork = false,
-  drawerRef,
   themeColors,
 ) {
   const innerStyles = StyleSheet.create({
@@ -196,7 +197,6 @@ export function getBackNavbarOptions(
       <TouchableOpacity
         onPress={() => {
           navigation.pop();
-          onPop?.();
         }}
         style={styles.backButton}
       >
@@ -211,7 +211,6 @@ export function getBackNavbarOptions(
       <TouchableOpacity
         onPress={() => {
           navigation.pop();
-          onPop?.();
         }}
         style={styles.backButton}
       >
@@ -632,7 +631,6 @@ export function getSendFlowTitle(title, navigation, route, themeColors) {
 export function getBrowserViewNavbarOptions(
   navigation,
   route,
-  drawerRef,
   themeColors,
 ) {
   const innerStyles = StyleSheet.create({
@@ -645,7 +643,6 @@ export function getBrowserViewNavbarOptions(
       color: themeColors.primary.default,
     },
   });
-
   const url = route.params?.url ?? '';
   let host = null;
   let isHttps = false;
@@ -674,7 +671,7 @@ export function getBrowserViewNavbarOptions(
 
   function onPress() {
     Keyboard.dismiss();
-    drawerRef.current?.showDrawer?.();
+    navigation.pop();
     trackEvent(ANALYTICS_EVENT_OPTS.COMMON_TAPS_HAMBURGER_MENU);
   }
 

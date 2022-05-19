@@ -712,7 +712,9 @@ class DrawerView extends PureComponent {
   };
 
   goToBrowser = () => {
-    this.props.navigation.navigate('BrowserTabHome');
+    this.props.navigation.navigate('BrowserHome',{
+      screen:"BrowserView"
+    });
     this.hideDrawer();
     this.trackOpenBrowserEvent();
     this.trackEvent(ANALYTICS_EVENT_OPTS.NAVIGATION_TAPS_BROWSER);
@@ -725,7 +727,9 @@ class DrawerView extends PureComponent {
   };
 
   goToTransactionHistory = () => {
-    this.props.navigation.navigate('TransactionsHome');
+    this.props.navigation.navigate('TransactionsHome',{
+      screen:"TransactionsView"
+    });
     this.hideDrawer();
     this.trackEvent(ANALYTICS_EVENT_OPTS.NAVIGATION_TAPS_TRANSACTION_HISTORY);
   };
