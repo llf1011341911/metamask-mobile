@@ -649,8 +649,8 @@ class DrawerView extends PureComponent {
     !showNetworkOnboarding && this.toggleNetworksModal();
     onboardNetworkAction(
       sanitizeUrl(networkUrl) ||
-        sanitizeUrl(switchedNetworkUrl) ||
-        this.state.networkUrl,
+      sanitizeUrl(switchedNetworkUrl) ||
+      this.state.networkUrl,
     );
     networkSwitched({ networkUrl: '', networkStatus: false });
     if (!manualClose) {
@@ -966,13 +966,13 @@ class DrawerView extends PureComponent {
           action: this.goToBrowser,
           routeNames: ['BrowserView', 'AddBookmark'],
         },
-        {
-          name: strings('drawer.wallet'),
-          icon: this.getImageIcon('wallet'),
-          selectedIcon: this.getSelectedImageIcon('wallet'),
-          action: this.showWallet,
-          routeNames: ['WalletView', 'Asset', 'AddAsset', 'Collectible'],
-        },
+        // {
+        //   name: strings('drawer.wallet'),
+        //   icon: this.getImageIcon('wallet'),
+        //   selectedIcon: this.getSelectedImageIcon('wallet'),
+        //   action: this.showWallet,
+        //   routeNames: ['WalletView', 'Asset', 'AddAsset', 'Collectible'],
+        // },
         {
           name: strings('drawer.transaction_activity'),
           icon: this.getFeatherIcon('list'),
@@ -1003,16 +1003,16 @@ class DrawerView extends PureComponent {
           warning: strings('drawer.settings_warning_short'),
           action: this.showSettings,
         },
-        {
-          name: strings('drawer.help'),
-          icon: this.getIcon('comments'),
-          action: this.showHelp,
-        },
-        {
-          name: strings('drawer.request_feature'),
-          icon: this.getFeatherIcon('message-square'),
-          action: this.submitFeedback,
-        },
+        // {
+        //   name: strings('drawer.help'),
+        //   icon: this.getIcon('comments'),
+        //   action: this.showHelp,
+        // },
+        // {
+        //   name: strings('drawer.request_feature'),
+        //   icon: this.getFeatherIcon('message-square'),
+        //   action: this.submitFeedback,
+        // },
         {
           name: strings('drawer.lock'),
           icon: this.getFeatherIcon('log-out'),
@@ -1205,7 +1205,7 @@ class DrawerView extends PureComponent {
               />
             </View>
           </View>
-          <View style={styles.account}>
+          {/* <View style={styles.account}>
             <View style={styles.accountBgOverlay}>
               <TouchableOpacity
                 style={styles.identiconWrapper}
@@ -1274,7 +1274,7 @@ class DrawerView extends PureComponent {
                 </Text>
               </View>
             </StyledButton>
-          </View>
+          </View> */}
           <View style={styles.menu}>
             {this.getSections().map(
               (section, i) =>
@@ -1307,7 +1307,7 @@ class DrawerView extends PureComponent {
                           style={[
                             styles.menuItem,
                             item.routeNames &&
-                            item.routeNames.includes(currentRoute)
+                              item.routeNames.includes(currentRoute)
                               ? styles.selectedRoute
                               : null,
                           ]}
@@ -1328,7 +1328,7 @@ class DrawerView extends PureComponent {
                               styles.menuItemName,
                               !item.icon ? styles.noIcon : null,
                               item.routeNames &&
-                              item.routeNames.includes(currentRoute)
+                                item.routeNames.includes(currentRoute)
                                 ? styles.selectedName
                                 : null,
                             ]}
@@ -1363,10 +1363,10 @@ class DrawerView extends PureComponent {
           backdropOpacity={1}
         >
           {showModal ||
-          networkOnboarding.showNetworkOnboarding ||
-          (currentRoute === 'WalletView' &&
-            switchedNetwork.networkStatus &&
-            checkIfCustomNetworkExists.length === 0) ? (
+            networkOnboarding.showNetworkOnboarding ||
+            (currentRoute === 'WalletView' &&
+              switchedNetwork.networkStatus &&
+              checkIfCustomNetworkExists.length === 0) ? (
             <NetworkInfo
               onClose={this.onInfoNetworksModalClose}
               type={networkType || networkOnboarding.networkType}

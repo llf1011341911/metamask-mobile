@@ -128,7 +128,7 @@ export default class WalletConnectSessions extends PureComponent {
     return null;
   };
 
-  onLongPress = (session) => {
+  onPress = (session) => {
     this.sessionToRemove = session;
     this.actionSheet.show();
   };
@@ -160,7 +160,7 @@ export default class WalletConnectSessions extends PureComponent {
     return sessions.map((session) => (
       <TouchableOpacity
         // eslint-disable-next-line react/jsx-no-bind
-        onLongPress={() => this.onLongPress(session)}
+        onPress={() => this.onPress(session)}
         key={`session_${session.peerId}`}
         style={styles.row}
       >
