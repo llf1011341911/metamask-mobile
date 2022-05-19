@@ -1086,12 +1086,14 @@ export function getWalletNavbarOptions(
  * @param {string} translate - Boolean that specifies if the title needs translation
  * @param {Object} navigation - Navigation object required to push new views
  * @returns {Object} - Corresponding navbar options containing headerTitle and headerTitle
+ * @returns {boolean} - Whether the network can be switched
  */
 export function getNetworkNavbarOptions(
   title,
   translate,
   navigation,
   themeColors,
+  disableNetwork = false
 ) {
   const innerStyles = StyleSheet.create({
     headerStyle: {
@@ -1104,7 +1106,7 @@ export function getNetworkNavbarOptions(
     },
   });
   return {
-    headerTitle: () => <NavbarTitle title={title} translate={translate} />,
+    headerTitle: () => <NavbarTitle title={title} translate={translate} disableNetwork = {disableNetwork}/>,
     headerLeft: () => (
       // eslint-disable-next-line react/jsx-no-bind
       <TouchableOpacity

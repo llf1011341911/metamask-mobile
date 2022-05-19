@@ -318,16 +318,13 @@ class AccountOverview extends PureComponent {
     });
   };
 
-  // Games Handle
   onGames =() =>{
-    // this.props.navigation.navigate('GamesStack');
-    // InteractionManager.runAfterInteractions(() => {
-    //   Analytics.trackEvent(ANALYTICS_EVENT_OPTS.WALLET_BUY_ETH);
-    //   AnalyticsV2.trackEvent(AnalyticsV2.ANALYTICS_EVENTS.ONRAMP_OPENED, {
-    //     button_location: 'Home Screen',
-    //     button_copy: 'Games',
-    //   });
-    // });
+    this.props.navigation.navigate('Games',{
+      screen:"GamesListScreen",
+      params:{
+        title:"Games"
+      }
+    });
   };
 
   goToSwaps = () =>
