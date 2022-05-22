@@ -711,9 +711,19 @@ class DrawerView extends PureComponent {
     this.trackEvent(ANALYTICS_EVENT_OPTS.NAVIGATION_TAPS_SEND);
   };
 
+  goToWalletConnect = () => {
+    this.props.navigation.navigate('SettingsView', {
+      screen: 'SettingsFlow',
+      params: { screen: 'WalletConnectSessionsView' },
+    });
+    this.hideDrawer();
+    this.trackOpenBrowserEvent();
+    this.trackEvent(ANALYTICS_EVENT_OPTS.NAVIGATION_TAPS_BROWSER);
+  };
+
   goToBrowser = () => {
-    this.props.navigation.navigate('BrowserHome',{
-      screen:"BrowserView"
+    this.props.navigation.navigate('BrowserHome', {
+      screen: "BrowserView"
     });
     this.hideDrawer();
     this.trackOpenBrowserEvent();
@@ -727,8 +737,8 @@ class DrawerView extends PureComponent {
   };
 
   goToTransactionHistory = () => {
-    this.props.navigation.navigate('TransactionsHome',{
-      screen:"TransactionsView"
+    this.props.navigation.navigate('TransactionsHome', {
+      screen: "TransactionsView"
     });
     this.hideDrawer();
     this.trackEvent(ANALYTICS_EVENT_OPTS.NAVIGATION_TAPS_TRANSACTION_HISTORY);
@@ -963,6 +973,13 @@ class DrawerView extends PureComponent {
     }
     return [
       [
+        {
+          name: strings('experimental_settings.wallet_connect_dapps'),
+          icon: this.getIcon('globe'),
+          selectedIcon: this.getSelectedIcon('globe'),
+          action: this.goToWalletConnect,
+          routeNames: ['WalletConnectSessionsView'],
+        },
         {
           name: strings('drawer.browser'),
           icon: this.getIcon('globe'),
