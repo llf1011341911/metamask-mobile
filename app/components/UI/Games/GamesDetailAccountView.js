@@ -3,6 +3,7 @@ import { ActivityIndicator, Text, View, StyleSheet } from 'react-native';
 import PropTypes from 'prop-types';
 import { strings } from '../../../../locales/i18n';
 import { connect } from 'react-redux';
+import { fontStyles, baseStyles } from '../../../styles/common';
 import { ThemeContext, mockTheme } from '../../../util/theme';
 
 const createStyles = (colors) =>
@@ -12,32 +13,32 @@ const createStyles = (colors) =>
       paddingHorizontal: 15,
     },
     accountTitle: {
+      ...fontStyles.normal,
       fontWeight: 'bold',
     },
-    accountHorizontal:{
-        flexDirection:"row",
-        justifyContent:"center"
+    accountHorizontal: {
+      flexDirection: 'row',
+      justifyContent: 'center',
     },
-    website:{
-        color: '#00FFFF',
-        fontSize:14
+    website: {
+      color: '#00FFFF',
+      fontSize: 14,
     },
-    account:{
-        fontSize:12,
-        fontWeight: 'bold',
-        flex:1
+    account: {
+      fontSize: 12,
+      fontWeight: 'bold',
+      flex: 1,
     },
-    address:{
-        color:"#999999",
-        fontSize:12
+    address: {
+      color: '#999999',
+      fontSize: 12,
     },
-    emailTitle:{
-        marginTop:16,
-        fontWeight: 'bold'
+    emailTitle: {
+      ...fontStyles.normal,
+      marginTop: 16,
+      fontWeight: 'bold',
     },
-    eamil:{
-        
-    }
+    eamil: {},
   });
 
 const GamesDetailAccountView = (props) => {
@@ -50,7 +51,9 @@ const GamesDetailAccountView = (props) => {
       </Text>
       <View style={styles.accountHorizontal}>
         <Text style={styles.account}>{props.accountId}</Text>
-        <Text style={styles.website}>{strings("games.view_in_the_block_browser")}</Text>
+        <Text style={styles.website}>
+          {strings('games.view_in_the_block_browser')}
+        </Text>
       </View>
       <Text style={styles.address}>{props.address}</Text>
       <Text style={styles.emailTitle}>{strings('games.register_email')}</Text>

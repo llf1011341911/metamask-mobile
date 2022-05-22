@@ -578,7 +578,7 @@ class Games extends PureComponent {
       this.props.navigation.navigate("Games",{
         screen:"GameDetailScreen",
         params:{
-          title:"标题"
+          title:item.id+"@" + item.world.name
         }
       })
     }}
