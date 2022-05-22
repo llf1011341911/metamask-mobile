@@ -6,13 +6,15 @@ import {
   StyleSheet,
   ScrollView,
 } from 'react-native';
-import PropTypes from 'prop-types';
+import PropTypes, { string } from 'prop-types';
 import { connect } from 'react-redux';
 import { getNetworkNavbarOptions } from '../../../UI/Navbar';
 import Engine from '../../../../core/Engine';
 import { ThemeContext, mockTheme } from '../../../../util/theme';
 import GamesDetailAccountView from '../../../UI/Games/GamesDetailAccountView';
 import GamesDetailHeader from '../../../UI/Games/GamesDetailHeader';
+import GamesDetailTrustAdminView from "../../../UI/Games/GamesDetailTrustAdminView";
+import { strings } from '../../../../../locales/i18n';
 
 const createStyles = (colors) =>
   StyleSheet.create({
@@ -186,6 +188,18 @@ class GamesDetailScreen extends PureComponent {
                 accountId={detailData.id + '@' + detailData.world.name}
                 email={detailData.email}
                 address={detailData.address}
+                context={this.context}
+              />
+              <GamesDetailTrustAdminView
+                title={strings('games.trust_admin')}
+                switchValue={true}
+                tips={strings('games.trust_admin_tips')}
+                context={this.context}
+              />
+              <GamesDetailTrustAdminView
+                title={strings('games.trust_world')}
+                switchValue={true}
+                tips={strings('games.trust_world_tips')}
                 context={this.context}
               />
             </View>

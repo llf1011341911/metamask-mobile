@@ -32,7 +32,7 @@ const createStyles = (colors) =>
         fontSize:12
     },
     emailTitle:{
-        marginTop:10,
+        marginTop:16,
         fontWeight: 'bold'
     },
     eamil:{
