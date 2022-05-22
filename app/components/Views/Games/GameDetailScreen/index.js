@@ -4,13 +4,15 @@ import {
   Text,
   View,
   StyleSheet,
+  ScrollView,
 } from 'react-native';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { getNetworkNavbarOptions } from '../../../UI/Navbar';
 import Engine from '../../../../core/Engine';
 import { ThemeContext, mockTheme } from '../../../../util/theme';
-import GamesDetailAccountView from "../../../UI/Games/GamesDetailAccountView";
+import GamesDetailAccountView from '../../../UI/Games/GamesDetailAccountView';
+import GamesDetailHeader from '../../../UI/Games/GamesDetailHeader';
 
 const createStyles = (colors) =>
   StyleSheet.create({
@@ -83,31 +85,32 @@ class GamesDetailScreen extends PureComponent {
   state = {
     refreshing: false,
     loading: false,
-    detailData:{
-      "worldAddress": "0x59d590745a053e65a57ecda300caaef25b32a1e8",
-      "id": "1",
-      "address": "0x0ec94b0f7d593e0e3e3e4743324f208ec8d01ba3",
-      "trustAdmin": false,
-      "trustWorld": false,
-      "nonce": 0,
-      "level": 0,
-      "registeredAt": "2022-05-11T06:02:27.000Z",
-      "insertedAt": "2022-05-19T17:34:02.052Z",
-      "updatedAt": "2022-05-19T17:34:02.566Z",
-      "blockHash": "0xa93fd59c218c09b427dcbb75f428842a66b0f7e38e55ee8d0d6e6ea23b6733be",
-      "blockNumber": "130",
-      "transactionsCount": 0,
-      "tokenTransfersCount": 0,
-      "email": "johndoe@github.com",
-      "pos": ["130", "0"],
-      "tokensCount": 0,
-      "world": {
-        "homepage": "https://www.callofduty.com",
-        "desc": "Call of Duty is a first-person shooter video game...",
-        "icon": "LzlqLzRBQVFTa1pKUmdBQkFRQUFBUU...",
-        "name": "32a1E8"
-      }
-    }
+    detailData: {
+      worldAddress: '0x59d590745a053e65a57ecda300caaef25b32a1e8',
+      id: '1',
+      address: '0x0ec94b0f7d593e0e3e3e4743324f208ec8d01ba3',
+      trustAdmin: false,
+      trustWorld: false,
+      nonce: 0,
+      level: 0,
+      registeredAt: '2022-05-11T06:02:27.000Z',
+      insertedAt: '2022-05-19T17:34:02.052Z',
+      updatedAt: '2022-05-19T17:34:02.566Z',
+      blockHash:
+        '0xa93fd59c218c09b427dcbb75f428842a66b0f7e38e55ee8d0d6e6ea23b6733be',
+      blockNumber: '130',
+      transactionsCount: 0,
+      tokenTransfersCount: 0,
+      email: 'johndoe@github.com',
+      pos: ['130', '0'],
+      tokensCount: 0,
+      world: {
+        homepage: 'https://www.callofduty.com',
+        desc: 'Call of Duty is a first-person shooter video game...',
+        icon: 'LzlqLzRBQVFTa1pKUmdBQkFRQUFBUU...',
+        name: '32a1E8',
+      },
+    },
   };
 
   updateNavBar = () => {
@@ -119,19 +122,17 @@ class GamesDetailScreen extends PureComponent {
         false,
         navigation,
         colors,
-        true
+        true,
       ),
     );
   };
 
   componentDidMount() {
     this.updateNavBar();
-   
   }
 
   componentDidUpdate(prevProps) {
     this.updateNavBar();
-    
   }
 
   showLoaderAndNormalize() {
@@ -144,7 +145,6 @@ class GamesDetailScreen extends PureComponent {
     this.mounted = false;
   }
 
-  
   renderLoader = () => {
     const colors = this.context.colors || mockTheme.colors;
     const styles = createStyles(colors);
@@ -163,7 +163,7 @@ class GamesDetailScreen extends PureComponent {
   };
 
   render = () => {
-    const { loading,detailData} = this.state;
+    const { loading, detailData } = this.state;
     const colors = this.context.colors || mockTheme.colors;
     const styles = createStyles(colors);
 
@@ -172,13 +172,24 @@ class GamesDetailScreen extends PureComponent {
         {loading ? (
           this.renderLoader()
         ) : (
-          <View>
-              <GamesDetailAccountView 
-                accountId={detailData.id + "@" + detailData.world.name}
+          <ScrollView>
+            <View>
+              <GamesDetailHeader
+                website={detailData.world.homepage}
+                headerIcon={detailData.world.icon}
+                desc={detailData.world.desc}
+                context={this.context}
+              />
+                
+              <View style={{marginTop:20}}/>
+              <GamesDetailAccountView
+                accountId={detailData.id + '@' + detailData.world.name}
                 email={detailData.email}
                 address={detailData.address}
+                context={this.context}
               />
-          </View>
+            </View>
+          </ScrollView>
         )}
       </View>
     );

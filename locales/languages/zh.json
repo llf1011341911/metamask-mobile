@@ -1902,6 +1902,7 @@
   },
   "games":{
       "account_id_title":"账户ID",
-      "register_email":"注册邮箱"
+      "register_email":"注册邮箱",
+      "view_in_the_block_browser":"在区块浏览器中查看"
   }
 }
