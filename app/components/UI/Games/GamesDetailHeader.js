@@ -6,7 +6,7 @@ import WebsiteIcon from '../WebsiteIcon';
 const createStyles = (colors) =>
   StyleSheet.create({
     wrapper: {
-      ackgroundColor: colors.background.default,
+      backgroundColor: colors.background.default,
       justifyContent: 'center',
       alignItems: 'center',
       marginTop: 10,
@@ -17,8 +17,13 @@ const createStyles = (colors) =>
       backgroundColor: '#F8F8F8',
     },
     website: {
+      marginTop: 8,
       color: '#00FFFF',
     },
+    desc: {
+      paddingHorizontal: 15,
+      marginTop: 8,
+    }
   });
 
 const GamesDetailHeader = (props) => {
@@ -28,7 +33,7 @@ const GamesDetailHeader = (props) => {
     <View style={styles.wrapper}>
       <WebsiteIcon url={props.headerIcon} style={styles.websiteIcon} />
       <Text style={styles.website}>{props.website}</Text>
-      <Text>{props.desc}</Text>
+      <Text style={styles.desc}>{props.desc}</Text>
     </View>
   );
 };

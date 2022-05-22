@@ -108,7 +108,7 @@ class GamesDetailScreen extends PureComponent {
       tokensCount: 0,
       world: {
         homepage: 'https://www.callofduty.com',
-        desc: 'Call of Duty is a first-person shooter video game...',
+        desc: '测试赛所所所所所所所所所所所所所所所所所所所所所所测试赛所所所所所所所所所所所所所所所所所所所所所所测试赛所所所所所所所所所所所所所所所所所所所所所所',
         icon: 'LzlqLzRBQVFTa1pKUmdBQkFRQUFBUU...',
         name: '32a1E8',
       },
@@ -182,8 +182,8 @@ class GamesDetailScreen extends PureComponent {
                 desc={detailData.world.desc}
                 context={this.context}
               />
-                
-              <View style={{marginTop:20}}/>
+
+              <View style={{ marginTop: 20 }} />
               <GamesDetailAccountView
                 accountId={detailData.id + '@' + detailData.world.name}
                 email={detailData.email}
@@ -192,15 +192,13 @@ class GamesDetailScreen extends PureComponent {
               />
               <GamesDetailTrustAdminView
                 title={strings('games.trust_admin')}
-                switchValue={true}
+                switchValue={false}
                 tips={strings('games.trust_admin_tips')}
-                context={this.context}
               />
               <GamesDetailTrustAdminView
                 title={strings('games.trust_world')}
                 switchValue={true}
                 tips={strings('games.trust_world_tips')}
-                context={this.context}
               />
             </View>
           </ScrollView>
