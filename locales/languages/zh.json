@@ -1899,5 +1899,9 @@
     "token_detection_mainnet_title": "已启用代币检测，因此将会有许多代币自动显示在您的钱包中。",
     "token_detection_mainnet_link": "您也可以手动添加代币。",
     "or": "或"
+  },
+  "games":{
+      "account_id_title":"账户ID",
+      "register_email":"注册邮箱"
   }
 }

@@ -37,6 +37,7 @@ import ManualBackupStep3 from '../../Views/ManualBackupStep3';
 import ImportPrivateKey from '../../Views/ImportPrivateKey';
 import ImportPrivateKeySuccess from '../../Views/ImportPrivateKeySuccess';
 import GamesListScreen from "../../Views/Games/GamesListScreen"
+import GameDetailScreen from "../../Views/Games/GameDetailScreen"
 import PaymentRequest from '../../UI/PaymentRequest';
 import PaymentRequestSuccess from '../../UI/PaymentRequestSuccess';
 import Amount from '../../Views/SendFlow/Amount';
@@ -119,6 +120,7 @@ const TransactionsHome = () => (
 const Games =() =>(
   <Stack.Navigator >
     <Stack.Screen name='GamesListScreen' component={GamesListScreen} options={GamesListScreen.navigationOptions}/>
+    <Stack.Screen name='GameDetailScreen' component={GameDetailScreen} options={GameDetailScreen.navigationOptions}/>
   </Stack.Navigator>
 );
 
