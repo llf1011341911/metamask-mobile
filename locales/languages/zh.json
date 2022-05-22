@@ -654,7 +654,7 @@
     "buy_button": "购买",
     "receive_button": "接收",
     "add_collectible_button": "添加",
-    "games_button":"Games",
+    "games_button": "Games",
     "info": "信息",
     "swap": "交换",
     "description": "描述",
@@ -1900,8 +1900,12 @@
     "token_detection_mainnet_link": "您也可以手动添加代币。",
     "or": "或"
   },
-  "games":{
-      "account_id_title":"账户ID",
-      "register_email":"注册邮箱"
+  "games": {
+    "account_id_title": "账户ID",
+    "register_email": "注册邮箱",
+    "trust_admin": "Trust Admin",
+    "trust_admin_tips": "打开此选项时，当用户丢失账户私钥，可以使用注册邮箱向 admin@world-website。com发送邮件提交申请，由Admin更改账户的权限设置，从而找回账户",
+    "trust_world": "Trust World",
+    "trust_world_tips": "打开此选项，账户授权World中所有设置为trust的合约访问 World中的各种资产，无需单独Approve操作"
   }
 }

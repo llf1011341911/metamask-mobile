@@ -5,12 +5,14 @@ import {
   View,
   StyleSheet,
 } from 'react-native';
-import PropTypes from 'prop-types';
+import PropTypes, { string } from 'prop-types';
 import { connect } from 'react-redux';
 import { getNetworkNavbarOptions } from '../../../UI/Navbar';
 import Engine from '../../../../core/Engine';
 import { ThemeContext, mockTheme } from '../../../../util/theme';
 import GamesDetailAccountView from "../../../UI/Games/GamesDetailAccountView";
+import GamesDetailTrustAdminView from "../../../UI/Games/GamesDetailTrustAdminView";
+import { strings } from '../../../../../locales/i18n';
 
 const createStyles = (colors) =>
   StyleSheet.create({
@@ -83,7 +85,7 @@ class GamesDetailScreen extends PureComponent {
   state = {
     refreshing: false,
     loading: false,
-    detailData:{
+    detailData: {
       "worldAddress": "0x59d590745a053e65a57ecda300caaef25b32a1e8",
       "id": "1",
       "address": "0x0ec94b0f7d593e0e3e3e4743324f208ec8d01ba3",
@@ -126,12 +128,12 @@ class GamesDetailScreen extends PureComponent {
 
   componentDidMount() {
     this.updateNavBar();
-   
+
   }
 
   componentDidUpdate(prevProps) {
     this.updateNavBar();
-    
+
   }
 
   showLoaderAndNormalize() {
@@ -144,7 +146,7 @@ class GamesDetailScreen extends PureComponent {
     this.mounted = false;
   }
 
-  
+
   renderLoader = () => {
     const colors = this.context.colors || mockTheme.colors;
     const styles = createStyles(colors);
@@ -163,7 +165,7 @@ class GamesDetailScreen extends PureComponent {
   };
 
   render = () => {
-    const { loading,detailData} = this.state;
+    const { loading, detailData } = this.state;
     const colors = this.context.colors || mockTheme.colors;
     const styles = createStyles(colors);
 
@@ -173,12 +175,27 @@ class GamesDetailScreen extends PureComponent {
           this.renderLoader()
         ) : (
           <View>
-              <GamesDetailAccountView 
-                accountId={detailData.id + "@" + detailData.world.name}
-                email={detailData.email}
-                address={detailData.address}
+            <GamesDetailAccountView
+              accountId={detailData.id + "@" + detailData.world.name}
+              email={detailData.email}
+              address={detailData.address}
+            />
+            <View>
+              <GamesDetailTrustAdminView
+                title={strings('games.trust_admin')}
+                switchValue={true}
+                tips={strings('games.trust_admin_tips')}
+                context={this.context}
               />
+              <GamesDetailTrustAdminView
+                title={strings('games.trust_world')}
+                switchValue={true}
+                tips={strings('games.trust_world_tips')}
+                context={this.context}
+              />
+            </View>
           </View>
+
         )}
       </View>
     );
