@@ -307,7 +307,7 @@ const createStyles = (colors) =>
   });
 
 const metamask_name = require('../../../images/metamask-name.png'); // eslint-disable-line
-const metamask_fox = require('../../../images/fox.png'); // eslint-disable-line
+const metamask_fox = require('../../../images/gon.png'); // eslint-disable-line
 const ICON_IMAGES = {
   wallet: require('../../../images/wallet-icon.png'), // eslint-disable-line
   'selected-wallet': require('../../../images/selected-wallet-icon.png'), // eslint-disable-line
@@ -1219,11 +1219,11 @@ class DrawerView extends PureComponent {
                 style={styles.metamaskFox}
                 resizeMethod={'auto'}
               />
-              <Image
+              {/* <Image
                 source={metamask_name}
                 style={styles.metamaskName}
                 resizeMethod={'auto'}
-              />
+              /> */}
             </View>
           </View>
           {/* <View style={styles.account}>

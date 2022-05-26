@@ -106,7 +106,7 @@ const styles = StyleSheet.create({
 });
 
 const metamask_name = require('../../../images/metamask-name.png'); // eslint-disable-line
-const metamask_fox = require('../../../images/fox.png'); // eslint-disable-line
+const metamask_fox = require('../../../images/gon.png'); // eslint-disable-line
 /**
  * Function that returns the navigation options
  * This is used by views that will show our custom navbar
@@ -192,35 +192,35 @@ export function getBackNavbarOptions(
       <NavbarTitle title={title} disableNetwork={disableNetwork} />
     ),
     headerLeft: () =>
-    Device.isAndroid() ? (
-      // eslint-disable-next-line react/jsx-no-bind
-      <TouchableOpacity
-        onPress={() => {
-          navigation.pop();
-        }}
-        style={styles.backButton}
-      >
-        <IonicIcon
-          name={'md-arrow-back'}
-          size={24}
-          style={innerStyles.headerIcon}
-        />
-      </TouchableOpacity>
-    ) : (
-      // eslint-disable-next-line react/jsx-no-bind
-      <TouchableOpacity
-        onPress={() => {
-          navigation.pop();
-        }}
-        style={styles.backButton}
-      >
-        <IonicIcon
-          name="ios-close"
-          size={38}
-          style={[innerStyles.headerIcon, styles.backIconIOS]}
-        />
-      </TouchableOpacity>
-    ),
+      Device.isAndroid() ? (
+        // eslint-disable-next-line react/jsx-no-bind
+        <TouchableOpacity
+          onPress={() => {
+            navigation.pop();
+          }}
+          style={styles.backButton}
+        >
+          <IonicIcon
+            name={'md-arrow-back'}
+            size={24}
+            style={innerStyles.headerIcon}
+          />
+        </TouchableOpacity>
+      ) : (
+        // eslint-disable-next-line react/jsx-no-bind
+        <TouchableOpacity
+          onPress={() => {
+            navigation.pop();
+          }}
+          style={styles.backButton}
+        >
+          <IonicIcon
+            name="ios-close"
+            size={38}
+            style={[innerStyles.headerIcon, styles.backIconIOS]}
+          />
+        </TouchableOpacity>
+      ),
     headerRight: () => <AccountRightButton />,
     headerStyle: innerStyles.headerStyle,
     headerTintColor: themeColors.primary.default,
@@ -678,31 +678,31 @@ export function getBrowserViewNavbarOptions(
   return {
     gestureEnabled: false,
     headerLeft: () =>
-    Device.isAndroid() ? (
-      // eslint-disable-next-line react/jsx-no-bind
-      <TouchableOpacity
-        onPress={onPress}
-        style={styles.backButton}
-      >
-        <IonicIcon
-          name={'md-arrow-back'}
-          size={24}
-          style={innerStyles.headerIcon}
-        />
-      </TouchableOpacity>
-    ) : (
-      // eslint-disable-next-line react/jsx-no-bind
-      <TouchableOpacity
-        onPress={onPress}
-        style={styles.backButton}
-      >
-        <IonicIcon
-          name="ios-close"
-          size={38}
-          style={[innerStyles.headerIcon, styles.backIconIOS]}
-        />
-      </TouchableOpacity>
-    ),
+      Device.isAndroid() ? (
+        // eslint-disable-next-line react/jsx-no-bind
+        <TouchableOpacity
+          onPress={onPress}
+          style={styles.backButton}
+        >
+          <IonicIcon
+            name={'md-arrow-back'}
+            size={24}
+            style={innerStyles.headerIcon}
+          />
+        </TouchableOpacity>
+      ) : (
+        // eslint-disable-next-line react/jsx-no-bind
+        <TouchableOpacity
+          onPress={onPress}
+          style={styles.backButton}
+        >
+          <IonicIcon
+            name="ios-close"
+            size={38}
+            style={[innerStyles.headerIcon, styles.backIconIOS]}
+          />
+        </TouchableOpacity>
+      ),
     headerTitle: () => (
       <NavbarBrowserTitle
         error={!!error}
@@ -1106,7 +1106,7 @@ export function getNetworkNavbarOptions(
     },
   });
   return {
-    headerTitle: () => <NavbarTitle title={title} translate={translate} disableNetwork = {disableNetwork}/>,
+    headerTitle: () => <NavbarTitle title={title} translate={translate} disableNetwork={disableNetwork} />,
     headerLeft: () => (
       // eslint-disable-next-line react/jsx-no-bind
       <TouchableOpacity
