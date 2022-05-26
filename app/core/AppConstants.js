@@ -60,7 +60,9 @@ export default {
     WYRE_MERCHANT_ID_TEST: 'merchant.io.metamask.wyre.test',
     POLLING_FREQUENCY: 10000,
   },
-  GAMES_URL:"https://blockscout.com/",
+  GAMES:{
+    WEB3:"https://data-seed-prebsc-1-s1.binance.org:8545"
+  },
   DEEPLINKS: {
     ORIGIN_DEEPLINK: 'deeplink',
     ORIGIN_QR_CODE: 'qr-code',

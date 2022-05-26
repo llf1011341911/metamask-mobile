@@ -42,9 +42,8 @@ import { collectibleContractsSelector } from '../../../reducers/collectibles';
 import { isQRHardwareAccount } from '../../../util/address';
 import { ThemeContext, mockTheme } from '../../../util/theme';
 import withQRHardwareAwareness from '../QRHardware/withQRHardwareAwareness';
-import { requestGamesList } from "./fetch"
+import { findAccountsByAddresses } from './fetch';
 import WebsiteIcon from '../../UI/WebsiteIcon';
-
 
 const createStyles = (colors) =>
   StyleSheet.create({
@@ -122,15 +121,15 @@ const createStyles = (colors) =>
       marginBottom: 10,
       ...fontStyles.normal,
       fontSize: 14,
-      bold:true,
+      bold: true,
       color: colors.text.alternative,
     },
     email: {
       marginBottom: 10,
       ...fontStyles.normal,
       fontSize: 12,
-      backgroundColor:"#F8F8F8",
-      padding:5,
+      backgroundColor: '#F8F8F8',
+      padding: 5,
       color: colors.text.alternative,
     },
   });
@@ -241,10 +240,10 @@ class Games extends PureComponent {
     rpcBlockExplorer: undefined,
     errorMsg: undefined,
     isQRHardwareAccount: false,
-    gamesData:{
-      accounts:[],
-      hasNext:false
-    }
+    gamesData: {
+      accounts: [],
+      hasNext: false,
+    },
   };
 
   existingGas = null;
@@ -280,11 +279,19 @@ class Games extends PureComponent {
       isQRHardwareAccount: isQRHardwareAccount(this.props.selectedAddress),
     });
 
-    const result = requestGamesList()
-    this.setState({
-      gamesData:result
-    })
-    
+    findAccountsByAddresses(
+      [
+        '0x1c534Eff630aD1598Be108C1230cbbAFb3b12EEA',
+        '0x774d1E211fBfaB83B4D0D6e3224d8AFF265AEf98',
+      ],
+      (errors, accounts) => {
+        Logger.log(accounts);
+      },
+    );
+    // const result = requestGamesList()
+    // this.setState({
+    //   gamesData:result
+    // })
   };
 
   componentWillUnmount() {
@@ -293,7 +300,6 @@ class Games extends PureComponent {
 
   init() {
     this.mounted && this.setState({ ready: true });
-
   }
 
   scrollToIndex = (index) => {
@@ -310,7 +316,6 @@ class Games extends PureComponent {
   toggleDetailsView = (id, index) => {
     // const oldId = this.selectedTx && this.selectedTx.id;
     // const oldIndex = this.selectedTx && this.selectedTx.index;
-
     // if (this.selectedTx && oldId !== id && oldIndex !== index) {
     //   this.selectedTx = null;
     //   this.toggleDetailsView(oldId, oldIndex);
@@ -331,12 +336,10 @@ class Games extends PureComponent {
     //     return { selectedTx };
     //   })
     // }
-
   };
 
   onRefresh = async () => {
     this.setState({ refreshing: true });
-    Logger.log("请求结果:"+JSON.stringify(this.props))
     // const result = await requestGamesList({
     //   addresses:[this.props.addresses]
     // })
@@ -572,30 +575,35 @@ class Games extends PureComponent {
   renderItem = ({ item, index }) => {
     const colors = this.context.colors || mockTheme.colors;
     const styles = createStyles(colors);
-    return    <TouchableOpacity
-    // eslint-disable-next-line react/jsx-no-bind
-    onPress={() => {
-      this.props.navigation.navigate("Games",{
-        screen:"GameDetailScreen",
-        params:{
-          title:item.id+"@" + item.world.name
-        }
-      })
-    }}
-    style={styles.row}
-  >
-    <WebsiteIcon url={item.world.icon} style={styles.websiteIcon} />
-    <View style={styles.info}>
-      <Text style={styles.name}>{item.world.name}</Text>
-      <Text style={styles.emailText}>{strings('games.account_id_title')}</Text>
-      <Text style={styles.url}>{item.id +"@" + item.world.name}</Text>
-      <Text style={styles.url}>{item.worldAddress}</Text>
-      <Text style={styles.emailText}>{strings('games.register_email')}</Text>
-      <Text style={styles.email}>{item.email}</Text>
-      {this.renderDesc(item)}
-    </View>
-  </TouchableOpacity>
-
+    return (
+      <TouchableOpacity
+        // eslint-disable-next-line react/jsx-no-bind
+        onPress={() => {
+          this.props.navigation.navigate('Games', {
+            screen: 'GameDetailScreen',
+            params: {
+              title: item.id + '@' + item.world.name,
+            },
+          });
+        }}
+        style={styles.row}
+      >
+        <WebsiteIcon url={item.world.icon} style={styles.websiteIcon} />
+        <View style={styles.info}>
+          <Text style={styles.name}>{item.world.name}</Text>
+          <Text style={styles.emailText}>
+            {strings('games.account_id_title')}
+          </Text>
+          <Text style={styles.url}>{item.id + '@' + item.world.name}</Text>
+          <Text style={styles.url}>{item.worldAddress}</Text>
+          <Text style={styles.emailText}>
+            {strings('games.register_email')}
+          </Text>
+          <Text style={styles.email}>{item.email}</Text>
+          {this.renderDesc(item)}
+        </View>
+      </TouchableOpacity>
+    );
   };
 
   renderDesc = (meta) => {
@@ -688,7 +696,8 @@ class Games extends PureComponent {
       header,
       isSigningQRObject,
     } = this.props;
-    const { cancelConfirmDisabled, speedUpConfirmDisabled , gamesData } = this.state;
+    const { cancelConfirmDisabled, speedUpConfirmDisabled, gamesData } =
+      this.state;
     const colors = this.context.colors || mockTheme.colors;
     const styles = createStyles(colors);
 
