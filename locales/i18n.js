@@ -7,37 +7,37 @@ import { LANGUAGE } from '../app/constants/storage';
 // import 'intl/locale-data/jsonp/en.js';
 
 // Import all locales
-import de from './languages/de';
-import el from './languages/el';
+// import de from './languages/de';
+// import el from './languages/el';
 import en from './languages/en';
-import es from './languages/es';
-import fr from './languages/fr';
-import hi from './languages/hi';
-import id from './languages/id';
-import ja from './languages/ja';
-import ko from './languages/ko';
-import pt from './languages/pt';
-import ru from './languages/ru';
-import tl from './languages/tl';
-import tr from './languages/tr';
-import vi from './languages/vi';
+// import es from './languages/es';
+// import fr from './languages/fr';
+// import hi from './languages/hi';
+// import id from './languages/id';
+// import ja from './languages/ja';
+// import ko from './languages/ko';
+// import pt from './languages/pt';
+// import ru from './languages/ru';
+// import tl from './languages/tl';
+// import tr from './languages/tr';
+// import vi from './languages/vi';
 import zh from './languages/zh';
 
 export const supportedTranslations = {
-  de,
-  el,
+  // de,
+  // el,
   en,
-  es,
-  fr,
-  hi,
-  id,
-  ja,
-  ko,
-  pt,
-  ru,
-  tl,
-  tr,
-  vi,
+  // es,
+  // fr,
+  // hi,
+  // id,
+  // ja,
+  // ko,
+  // pt,
+  // ru,
+  // tl,
+  // tr,
+  // vi,
   zh,
 };
 
@@ -99,20 +99,20 @@ export async function setLocale(locale) {
 // Get languages
 export function getLanguages() {
   return {
-    de: 'German',
-    el: 'Greek',
+    // de: 'German',
+    // el: 'Greek',
     en: 'English',
-    es: 'Spanish',
-    fr: 'French',
-    hi: 'Hindi',
-    id: 'Bahasa Indonesian',
-    ja: 'Japanese',
-    ko: 'Korean',
-    pt: 'Portuguese - Brazil',
-    ru: 'Russian',
-    tl: 'Filipino',
-    tr: 'Turkish',
-    vi: 'Vietnamese',
+    // es: 'Spanish',
+    // fr: 'French',
+    // hi: 'Hindi',
+    // id: 'Bahasa Indonesian',
+    // ja: 'Japanese',
+    // ko: 'Korean',
+    // pt: 'Portuguese - Brazil',
+    // ru: 'Russian',
+    // tl: 'Filipino',
+    // tr: 'Turkish',
+    // vi: 'Vietnamese',
     zh: 'Chinese - China',
   };
 }

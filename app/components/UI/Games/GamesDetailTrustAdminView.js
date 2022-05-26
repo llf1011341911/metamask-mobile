@@ -12,9 +12,7 @@ import PropTypes, { any } from 'prop-types';
 import { strings } from '../../../../locales/i18n';
 import { connect } from 'react-redux';
 import { ThemeContext, mockTheme } from '../../../util/theme';
-import {
-  fontStyles,
-} from '../../../../styles/common';
+import { fontStyles } from '../../../styles/common';
 
 const styles = StyleSheet.create({
   wrapper: {
@@ -30,42 +28,56 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   title: {
+    ...fontStyles.bold,
+    fontSize: 16,
     flex: 1,
   },
-  marginTop: {
+  tips: {
+    ...fontStyles.normal,
+    fontSize: 12,
     marginTop: 8,
   },
 })
 
-const GamesDetailTrustAdminView = (props) => {
+class GamesDetailTrustAdminView extends PureComponent {
 
-  const colors = props.context.colors || mockTheme.colors;
+  static propTypes = {
+    title: PropTypes.string,
+    tips: PropTypes.string,
+    switchValue: PropTypes.bool,
+  };
 
-  return <View style={styles.wrapper}>
+  state = {
+    select: this.props.switchValue
+  }
 
-    <View style={styles.titleView}>
-      <Text style={styles.title}>{props.title}</Text>
-      <Switch
-        value={props.value}
-        trackColor={{
-          true: colors.primary.default,
-          false: colors.border.muted,
-        }}
-        thumbColor={colors.white}
-        style={styles.switch}
-        ios_backgroundColor={colors.border.muted}
-      />
+  render() {
+    const props = this.props
+    const colors = this.context.colors || mockTheme.colors;
+
+    return <View style={styles.wrapper}>
+
+      <View style={styles.titleView}>
+        <Text style={styles.title}>{props.title}</Text>
+        <Switch
+          value={this.state.select}
+          onValueChange={() => {
+            this.setState({
+              select: !this.state.select
+            })
+          }}
+          trackColor={{
+            true: colors.primary.default,
+            false: colors.border.muted,
+          }}
+          thumbColor={colors.white}
+          style={styles.switch}
+          ios_backgroundColor={colors.border.muted}
+        />
+      </View>
+      <Text style={styles.tips}>{props.tips}</Text>
     </View>
-    <Text style={styles.marginTop}>{props.tips}</Text>
-  </View>
-};
-
-GamesDetailTrustAdminView.propTypes = {
-  title: PropTypes.string,
-  tips: PropTypes.string,
-  switchValue: PropTypes.bool,
-  context: any
-};
-
+  }
+}
 
 export default GamesDetailTrustAdminView;

@@ -13,12 +13,14 @@ const createStyles = (colors) =>
       paddingHorizontal: 15,
     },
     accountTitle: {
-      ...fontStyles.normal,
-      fontWeight: 'bold',
+      ...fontStyles.bold,
+      fontSize: 16
     },
     accountHorizontal: {
       flexDirection: 'row',
-      justifyContent: 'center',
+      alignItems: 'center',
+      flex: 1,
+      marginTop: 8,
     },
     website: {
       color: '#00FFFF',
@@ -32,13 +34,16 @@ const createStyles = (colors) =>
     address: {
       color: '#999999',
       fontSize: 12,
+      marginTop: 4
     },
     emailTitle: {
-      ...fontStyles.normal,
+      ...fontStyles.bold,
+      fontSize: 16,
       marginTop: 16,
-      fontWeight: 'bold',
     },
-    eamil: {},
+    eamil: {
+      marginTop: 8
+    },
   });
 
 const GamesDetailAccountView = (props) => {

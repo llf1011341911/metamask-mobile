@@ -74,7 +74,7 @@ const createStyles = (colors) =>
     },
   });
 
-const foxImage = require('../../../../images/fox.png'); // eslint-disable-line import/no-commonjs
+const foxImage = require('../../../../images/gon.png'); // eslint-disable-line import/no-commonjs
 
 /**
  * View that contains app information
