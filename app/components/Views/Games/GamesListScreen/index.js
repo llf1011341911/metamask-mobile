@@ -93,22 +93,7 @@ class GamesListScreen extends PureComponent {
     route: PropTypes.object,
   };
 
-  state = {
-    refreshing: false,
-    loading: false,
-    transactionsUpdated: false,
-    submittedTxs: [],
-    confirmedTxs: [],
-    transactions: [],
-  };
-
-  txs = [];
-  txsPending = [];
-  isNormalizing = false;
-  chainId = '';
-  filter = undefined;
-  navSymbol = undefined;
-  navAddress = undefined;
+  
 
   updateNavBar = () => {
     const { navigation, route } = this.props;
@@ -126,220 +111,19 @@ class GamesListScreen extends PureComponent {
 
   componentDidMount() {
     this.updateNavBar();
-    InteractionManager.runAfterInteractions(() => {
-      this.normalizeTransactions();
-      this.mounted = true;
-    });
-    this.navSymbol = (this.props.route.params?.symbol ?? '').toLowerCase();
-    this.navAddress = (this.props.route.params?.address ?? '').toLowerCase();
-    if (this.navSymbol.toUpperCase() !== 'ETH' && this.navAddress !== '') {
-      this.filter = this.noEthFilter;
-    } else {
-      this.filter = this.ethFilter;
-    }
   }
 
   componentDidUpdate(prevProps) {
     this.updateNavBar();
-    if (
-      prevProps.chainId !== this.props.chainId ||
-      prevProps.selectedAddress !== this.props.selectedAddress
-    ) {
-      this.showLoaderAndNormalize();
-    } else {
-      this.normalizeTransactions();
-    }
-  }
-
-  showLoaderAndNormalize() {
-    this.setState({ loading: true }, () => {
-      this.normalizeTransactions();
-    });
   }
 
   componentWillUnmount() {
     this.mounted = false;
   }
 
-  didTxStatusesChange = (newTxsPending) =>
-    this.txsPending.length !== newTxsPending.length;
-
-  ethFilter = (tx) => {
-    const { selectedAddress, chainId } = this.props;
-    const {
-      transaction: { from, to },
-      isTransfer,
-      transferInformation,
-    } = tx;
-
-    const network = Engine.context.NetworkController.state.network;
-    if (
-      (safeToChecksumAddress(from) === selectedAddress ||
-        safeToChecksumAddress(to) === selectedAddress) &&
-      (chainId === tx.chainId || (!tx.chainId && network === tx.networkID)) &&
-      tx.status !== 'unapproved'
-    ) {
-      if (isTransfer)
-        return this.props.tokens.find(({ address }) =>
-          toLowerCaseEquals(address, transferInformation.contractAddress),
-        );
-      return true;
-    }
-    return false;
-  };
-
-  noEthFilter = (tx) => {
-    const { chainId, swapsTransactions, selectedAddress } = this.props;
-    const {
-      transaction: { to, from },
-      isTransfer,
-      transferInformation,
-    } = tx;
-    const network = Engine.context.NetworkController.state.network;
-    if (
-      (safeToChecksumAddress(from) === selectedAddress ||
-        safeToChecksumAddress(to) === selectedAddress) &&
-      (chainId === tx.chainId || (!tx.chainId && network === tx.networkID)) &&
-      tx.status !== 'unapproved'
-    ) {
-      if (to?.toLowerCase() === this.navAddress) return true;
-      if (isTransfer)
-        return (
-          this.navAddress === transferInformation.contractAddress.toLowerCase()
-        );
-      if (
-        swapsTransactions[tx.id] &&
-        (to?.toLowerCase() === swapsUtils.getSwapsContractAddress(chainId) ||
-          to?.toLowerCase() === this.navAddress)
-      ) {
-        const { destinationToken, sourceToken } = swapsTransactions[tx.id];
-        return (
-          destinationToken.address === this.navAddress ||
-          sourceToken.address === this.navAddress
-        );
-      }
-    }
-    return false;
-  };
-
-  normalizeTransactions() {
-    if (this.isNormalizing) return;
-    let accountAddedTimeInsertPointFound = false;
-    const { selectedAddress } = this.props;
-    const addedAccountTime = this.props.identities[selectedAddress]?.importTime;
-    this.isNormalizing = true;
-
-    let submittedTxs = [];
-    const newPendingTxs = [];
-    const confirmedTxs = [];
-    const submittedNonces = [];
-
-    const { chainId, transactions } = this.props;
-    if (transactions.length) {
-      const sortedTransactions = sortTransactions(transactions).filter(
-        (tx, index, self) =>
-          self.findIndex((_tx) => _tx.id === tx.id) === index,
-      );
-      const filteredTransactions = sortedTransactions.filter((tx) => {
-        const filterResult = this.filter(tx);
-        if (filterResult) {
-          tx.insertImportTime = addAccountTimeFlagFilter(
-            tx,
-            addedAccountTime,
-            accountAddedTimeInsertPointFound,
-          );
-          if (tx.insertImportTime) accountAddedTimeInsertPointFound = true;
-          switch (tx.status) {
-            case TX_SUBMITTED:
-            case TX_SIGNED:
-            case TX_UNAPPROVED:
-              submittedTxs.push(tx);
-              return false;
-            case TX_PENDING:
-              newPendingTxs.push(tx);
-              break;
-            case TX_CONFIRMED:
-              confirmedTxs.push(tx);
-              break;
-          }
-        }
-        return filterResult;
-      });
-
-      submittedTxs = submittedTxs.filter(({ transaction: { from, nonce } }) => {
-        if (!toLowerCaseEquals(from, selectedAddress)) {
-          return false;
-        }
-        const alreadySubmitted = submittedNonces.includes(nonce);
-        const alreadyConfirmed = confirmedTxs.find(
-          (confirmedTransaction) =>
-            toLowerCaseEquals(
-              safeToChecksumAddress(confirmedTransaction.transaction.from),
-              selectedAddress,
-            ) && confirmedTransaction.transaction.nonce === nonce,
-        );
-        if (alreadyConfirmed) {
-          return false;
-        }
-        submittedNonces.push(nonce);
-        return !alreadySubmitted;
-      });
-
-      // If the account added "Insert Point" is not found add it to the last transaction
-      if (
-        !accountAddedTimeInsertPointFound &&
-        filteredTransactions &&
-        filteredTransactions.length
-      ) {
-        filteredTransactions[
-          filteredTransactions.length - 1
-        ].insertImportTime = true;
-      }
-      // To avoid extra re-renders we want to set the new txs only when
-      // there's a new tx in the history or the status of one of the existing txs changed
-      if (
-        (this.txs.length === 0 && !this.state.transactionsUpdated) ||
-        this.txs.length !== filteredTransactions.length ||
-        this.chainId !== chainId ||
-        this.didTxStatusesChange(newPendingTxs)
-      ) {
-        this.txs = filteredTransactions;
-        this.txsPending = newPendingTxs;
-        this.setState({
-          transactionsUpdated: true,
-          loading: false,
-          transactions: filteredTransactions,
-          submittedTxs,
-          confirmedTxs,
-        });
-      }
-    } else if (!this.state.transactionsUpdated) {
-      this.setState({ transactionsUpdated: true, loading: false });
-    }
-    this.isNormalizing = false;
-    this.chainId = chainId;
-  }
-
-  renderLoader = () => {
-    const colors = this.context.colors || mockTheme.colors;
-    const styles = createStyles(colors);
-
-    return (
-      <View style={styles.loader}>
-        <ActivityIndicator style={styles.loader} size="small" />
-      </View>
-    );
-  };
-
 
   render = () => {
-    const {
-      loading,
-      transactions,
-      submittedTxs,
-      confirmedTxs,
-      transactionsUpdated,
-    } = this.state;
+
     const {
       route: { params },
       navigation,
@@ -353,22 +137,13 @@ class GamesListScreen extends PureComponent {
 
     return (
       <View style={styles.wrapper}>
-        {loading ? (
-          this.renderLoader()
-        ) : (
           <Games
-            assetSymbol={navigation && params.symbol}
             navigation={navigation}
-            transactions={[{time:'123',id:'123'},{time:'32',id:'2',transaction:{notice:"123"}}]}
-            submittedTransactions={submittedTxs}
-            confirmedTransactions={confirmedTxs}
             selectedAddress={selectedAddress}
             conversionRate={conversionRate}
             currentCurrency={currentCurrency}
             networkType={chainId}
-            loading={!transactionsUpdated}
           />
-        )}
       </View>
     );
   };
