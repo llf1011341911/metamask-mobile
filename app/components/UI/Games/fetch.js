@@ -47,50 +47,50 @@ export function findAccountsByAddresses(addresses, callback) {
                   errors.push(err);
                 }
                 if (--i === 0) {
-                  callback(errors,accounts);
-                  // alert(JSON.stringify(accounts));
-                  // callback(errors, [
-                  //   {
-                  //     address:"0x1c534Eff630aD1598Be108C1230cbbAFb3b12EEA",
-                  //     email:"",
-                  //     id:"1",
-                  //     world:{
-                  //       address:"0x8E559d60c0bdb1C2946e16F92D1C5d82b9Ace25B",
-                  //       icon:"",
-                  //       name:"Ace25B"
-                  //     }
-                  //   },
-                  //   {
-                  //     address:"0x1c534Eff630aD1598Be108C1230cbbAFb3b12EEA",
-                  //     email:"",
-                  //     id:"1",
-                  //     world:{
-                  //       address:"0x8E559d60c0bdb1C2946e16F92D1C5d82b9Ace25B",
-                  //       icon:"",
-                  //       name:"Ace25B"
-                  //     }
-                  //   },
-                  //   {
-                  //     address:"0x1c534Eff630aD1598Be108C1230cbbAFb3b12EEA",
-                  //     email:"",
-                  //     id:"1",
-                  //     world:{
-                  //       address:"0x8E559d60c0bdb1C2946e16F92D1C5d82b9Ace25B",
-                  //       icon:"",
-                  //       name:"Ace25B"
-                  //     }
-                  //   },
-                  //   {
-                  //     address:"0x1c534Eff630aD1598Be108C1230cbbAFb3b12EEA",
-                  //     email:"",
-                  //     id:"1",
-                  //     world:{
-                  //       address:"0x8E559d60c0bdb1C2946e16F92D1C5d82b9Ace25B",
-                  //       icon:"",
-                  //       name:"Ace25B"
-                  //     }
-                  //   }
-                  // ]);
+                  // callback(errors,accounts);
+                  alert(JSON.stringify(accounts));
+                  callback(errors, [
+                    {
+                      address:"0x1c534Eff630aD1598Be108C1230cbbAFb3b12EEA",
+                      email:"",
+                      id:"1",
+                      world:{
+                        address:"0x8E559d60c0bdb1C2946e16F92D1C5d82b9Ace25B",
+                        icon:"",
+                        name:"Ace25B"
+                      }
+                    },
+                    {
+                      address:"0x1c534Eff630aD1598Be108C1230cbbAFb3b12EEA",
+                      email:"",
+                      id:"1",
+                      world:{
+                        address:"0x8E559d60c0bdb1C2946e16F92D1C5d82b9Ace25B",
+                        icon:"",
+                        name:"Ace25B"
+                      }
+                    },
+                    {
+                      address:"0x1c534Eff630aD1598Be108C1230cbbAFb3b12EEA",
+                      email:"",
+                      id:"1",
+                      world:{
+                        address:"0x8E559d60c0bdb1C2946e16F92D1C5d82b9Ace25B",
+                        icon:"",
+                        name:"Ace25B"
+                      }
+                    },
+                    {
+                      address:"0x1c534Eff630aD1598Be108C1230cbbAFb3b12EEA",
+                      email:"",
+                      id:"1",
+                      world:{
+                        address:"0x8E559d60c0bdb1C2946e16F92D1C5d82b9Ace25B",
+                        icon:"",
+                        name:"Ace25B"
+                      }
+                    }
+                  ]);
                 }
               });
         batchRequest.add(req);

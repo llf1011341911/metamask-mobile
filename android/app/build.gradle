@@ -157,7 +157,8 @@ android {
     compileSdkVersion rootProject.ext.compileSdkVersion
 
 	defaultConfig {
-		applicationId "com.gaiaopen.wallet"
+//		applicationId "com.gaiaopen.wallet"
+		applicationId "io.metamask"
 		minSdkVersion rootProject.ext.minSdkVersion
 		targetSdkVersion rootProject.ext.targetSdkVersion
 		versionCode 877
@@ -189,9 +190,9 @@ android {
 	signingConfigs {
 		release {
 			storeFile file('../keystores/release.keystore')
-			storePassword System.getenv("BITRISEIO_ANDROID_KEYSTORE_PASSWORD")
-			keyAlias System.getenv("BITRISEIO_ANDROID_KEYSTORE_ALIAS")
-			keyPassword System.getenv("BITRISEIO_ANDROID_KEYSTORE_PRIVATE_KEY_PASSWORD")
+			storePassword "metamask123456"
+			keyAlias "MetaMask"
+			keyPassword "metamask123456"
 		}
 		debug {
             storeFile file('debug.keystore')
