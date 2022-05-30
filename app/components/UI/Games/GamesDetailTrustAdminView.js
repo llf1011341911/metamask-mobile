@@ -54,7 +54,7 @@ class GamesDetailTrustAdminView extends PureComponent {
   render() {
     const props = this.props
     const colors = this.context.colors || mockTheme.colors;
-
+    console.log("信任" + this.props.switchValue)
     return <View style={styles.wrapper}>
 
       <View style={styles.titleView}>

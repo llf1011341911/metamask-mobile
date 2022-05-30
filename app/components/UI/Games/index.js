@@ -183,40 +183,46 @@ class Games extends PureComponent {
     }, 100);
   };
 
-  componentWillUnmount() {}
+  componentWillUnmount() { }
 
   onLoading = async () => {
     this.setState({
-      loading:true
+      loading: true
     });
-    findAccountsByAddresses(
-      [
+    try {
+      const result = await findAccountsByAddresses([
         '0x1c534Eff630aD1598Be108C1230cbbAFb3b12EEA',
         '0x774d1E211fBfaB83B4D0D6e3224d8AFF265AEf98',
-      ],
-      (errors, accounts) => {
-        if (accounts != null) {
-          this.setState({ accounts: accounts });
-        }
-        this.setState({ loading: false });
-      },
-    );
+      ])
+      this.setState({
+        accounts: result,
+        loading: false
+      })
+    } catch (error) {
+      this.setState({
+        accounts: [],
+        loading: false
+      })
+    }
   };
 
   onRefresh = async () => {
     this.setState({ refreshing: true });
-    findAccountsByAddresses(
-      [
+    try {
+      const result = await findAccountsByAddresses([
         '0x1c534Eff630aD1598Be108C1230cbbAFb3b12EEA',
         '0x774d1E211fBfaB83B4D0D6e3224d8AFF265AEf98',
-      ],
-      (errors, accounts) => {
-        if (accounts != null) {
-          this.setState({ accounts: accounts });
-        }
-        this.setState({ refreshing: false });
-      },
-    );
+      ])
+      this.setState({
+        accounts: result,
+        refreshing: false
+      })
+    } catch (error) {
+      this.setState({
+        accounts: [],
+        refreshing: false
+      })
+    }
   };
 
   renderLoader = () => {
@@ -273,6 +279,7 @@ class Games extends PureComponent {
             screen: 'GameDetailScreen',
             params: {
               title: item.id + '@' + item.world.name,
+              data: item
             },
           });
         }}
@@ -285,7 +292,7 @@ class Games extends PureComponent {
             {strings('games.account_id_title')}
           </Text>
           <Text style={styles.url}>{item.id + '@' + item.world.name}</Text>
-          <Text style={styles.url}>{item.worldAddress}</Text>
+          <Text style={styles.url}>{item.world.address}</Text>
           <Text style={styles.emailText}>
             {strings('games.register_email')}
           </Text>
@@ -370,8 +377,8 @@ class Games extends PureComponent {
         {loading
           ? this.renderLoader()
           : !accounts.length
-          ? this.renderEmpty()
-          : this.renderList()}
+            ? this.renderEmpty()
+            : this.renderList()}
       </SafeAreaView>
     );
   };

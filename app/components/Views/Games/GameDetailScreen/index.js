@@ -15,6 +15,7 @@ import GamesDetailAccountView from '../../../UI/Games/GamesDetailAccountView';
 import GamesDetailHeader from '../../../UI/Games/GamesDetailHeader';
 import GamesDetailTrustAdminView from "../../../UI/Games/GamesDetailTrustAdminView";
 import { strings } from '../../../../../locales/i18n';
+import { getGamesDetail } from "../../../UI/Games/fetch";
 
 const createStyles = (colors) =>
   StyleSheet.create({
@@ -87,32 +88,7 @@ class GamesDetailScreen extends PureComponent {
   state = {
     refreshing: false,
     loading: false,
-    detailData: {
-      worldAddress: '0x59d590745a053e65a57ecda300caaef25b32a1e8',
-      id: '1',
-      address: '0x0ec94b0f7d593e0e3e3e4743324f208ec8d01ba3',
-      trustAdmin: false,
-      trustWorld: false,
-      nonce: 0,
-      level: 0,
-      registeredAt: '2022-05-11T06:02:27.000Z',
-      insertedAt: '2022-05-19T17:34:02.052Z',
-      updatedAt: '2022-05-19T17:34:02.566Z',
-      blockHash:
-        '0xa93fd59c218c09b427dcbb75f428842a66b0f7e38e55ee8d0d6e6ea23b6733be',
-      blockNumber: '130',
-      transactionsCount: 0,
-      tokenTransfersCount: 0,
-      email: 'johndoe@github.com',
-      pos: ['130', '0'],
-      tokensCount: 0,
-      world: {
-        homepage: 'https://www.callofduty.com',
-        desc: '测试赛所所所所所所所所所所所所所所所所所所所所所所测试赛所所所所所所所所所所所所所所所所所所所所所所测试赛所所所所所所所所所所所所所所所所所所所所所所',
-        icon: 'LzlqLzRBQVFTa1pKUmdBQkFRQUFBUU...',
-        name: '32a1E8',
-      },
-    },
+    detailData: this.props.route.params?.data ?? {},
   };
 
   updateNavBar = () => {
@@ -131,6 +107,36 @@ class GamesDetailScreen extends PureComponent {
 
   componentDidMount() {
     this.updateNavBar();
+    setTimeout(() => {
+      this.getDetail()
+    }, 100);
+  }
+
+  getDetail = async () => {
+    const { detailData } = this.state
+    if (detailData.id == null) {
+      return
+    }
+    this.setState({
+      loading: true
+    })
+    try {
+      const detail = await getGamesDetail(detailData.id, '0x8e559d60c0bdb1c2946e16f92d1c5d82b9ace25b')
+      console.log("详情返回" + JSON.stringify(detail))
+      this.setState({
+        detailData: {
+          ...detailData,
+          ...detail
+        },
+        loading: false
+      })
+    } catch (error) {
+      console.log("详情返回" + error)
+      this.setState({
+        loading: false
+      })
+    }
+
   }
 
   componentDidUpdate(prevProps) {
@@ -158,12 +164,6 @@ class GamesDetailScreen extends PureComponent {
     );
   };
 
-  onRefresh = async () => {
-    this.setState({ refreshing: true });
-    this.props.thirdPartyApiMode && (await Engine.refreshTransactionHistory());
-    this.setState({ refreshing: false });
-  };
-
   render = () => {
     const { loading, detailData } = this.state;
     const colors = this.context.colors || mockTheme.colors;
@@ -179,7 +179,7 @@ class GamesDetailScreen extends PureComponent {
               <GamesDetailHeader
                 website={detailData.world.homepage}
                 headerIcon={detailData.world.icon}
-                desc={detailData.world.desc}
+                desc={detailData.desc}
                 context={this.context}
               />
 
@@ -197,7 +197,7 @@ class GamesDetailScreen extends PureComponent {
               />
               <GamesDetailTrustAdminView
                 title={strings('games.trust_world')}
-                switchValue={true}
+                switchValue={detailData.trustWorld}
                 tips={strings('games.trust_world_tips')}
               />
             </View>
