@@ -494,15 +494,15 @@ class Onboarding extends PureComponent {
             <View style={styles.wrapper}>
               {loading && (
                 <View style={styles.foxWrapper}>
-                  {Device.isAndroid() ? (
-                    <Image
-                      source={require('../../../images/gon.png')}
-                      style={styles.image}
-                      resizeMethod={'auto'}
-                    />
-                  ) : (
+                  {/* {Device.isAndroid() ? ( */}
+                  <Image
+                    source={require('../../../images/gon.png')}
+                    style={styles.image}
+                    resizeMethod={'auto'}
+                  />
+                  {/* ) : (
                     <AnimatedFox bgColor={colors.background.default} />
-                  )}
+                  )} */}
                 </View>
               )}
               {loading ? this.renderLoader() : this.renderContent()}

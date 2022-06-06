@@ -89,15 +89,15 @@ export default class WebviewError extends PureComponent {
     return error ? (
       <View style={styles.wrapper}>
         <View style={styles.foxWrapper}>
-          {Device.isAndroid() ? (
-            <Image
-              source={require('../../../images/fox.png')}
-              style={styles.image}
-              resizeMethod={'auto'}
-            />
-          ) : (
+          {/* {Device.isAndroid() ? ( */}
+          <Image
+            source={require('../../../images/gon.png')}
+            style={styles.image}
+            resizeMethod={'auto'}
+          />
+          {/* ) : (
             <AnimatedFox bgColor={colors.background.default} />
-          )}
+          )} */}
         </View>
         <View style={styles.textWrapper}>
           <Text style={styles.errorTitle}>

@@ -760,17 +760,24 @@ export function getOnboardingNavbarOptions(
       height: 15,
       tintColor: themeColors.text.default,
     },
+    gonName: {
+      fontSize: 20,
+      color: themeColors.text.default,
+      ...fontStyles.bold,
+      textAlign: 'center',
+    }
   });
 
   return {
     headerStyle: innerStyles.headerStyle,
     headerTitle: () => (
       <View style={styles.metamaskNameTransparentWrapper}>
-        <Image
+        {/* <Image
           source={metamask_name}
           style={innerStyles.metamaskName}
           resizeMethod={'auto'}
-        />
+        /> */}
+        <Text style={innerStyles.gonName}>{"GON"}</Text>
       </View>
     ),
     headerBackTitle: strings('navigation.back'),
@@ -797,15 +804,23 @@ export function getTransparentOnboardingNavbarOptions(themeColors) {
       height: 15,
       tintColor: themeColors.text.default,
     },
+    gonName: {
+      fontSize: 20,
+      color: themeColors.text.default,
+      ...fontStyles.bold,
+      textAlign: 'center',
+    }
+
   });
   return {
     headerTitle: () => (
       <View style={styles.metamaskNameTransparentWrapper}>
-        <Image
+        {/* <Image
           source={metamask_name}
           style={innerStyles.metamaskName}
           resizeMethod={'auto'}
-        />
+        /> */}
+        <Text style={innerStyles.gonName}>{"GON"}</Text>
       </View>
     ),
     headerLeft: () => <View />,
@@ -831,15 +846,22 @@ export function getTransparentBackOnboardingNavbarOptions(themeColors) {
       height: 15,
       tintColor: themeColors.text.default,
     },
+    gonName: {
+      fontSize: 20,
+      color: themeColors.text.default,
+      ...fontStyles.bold,
+      textAlign: 'center',
+    },
   });
   return {
     headerTitle: () => (
       <View style={styles.metamaskNameTransparentWrapper}>
-        <Image
+        {/* <Image
           source={metamask_name}
           style={innerStyles.metamaskName}
           resizeMethod={'auto'}
-        />
+        /> */}
+        <Text style={innerStyles.gonName}>{"GON"}</Text>
       </View>
     ),
     headerBackTitle: strings('navigation.back'),
@@ -868,6 +890,12 @@ export function getOptinMetricsNavbarOptions(themeColors) {
       height: 15,
       tintColor: themeColors.text.default,
     },
+    gonName: {
+      fontSize: 20,
+      color: themeColors.text.default,
+      ...fontStyles.bold,
+      textAlign: 'center',
+    },
   });
 
   return {
@@ -883,11 +911,12 @@ export function getOptinMetricsNavbarOptions(themeColors) {
           />
         </View>
         <View style={styles.metamaskNameWrapper}>
-          <Image
+          {/* <Image
             source={metamask_name}
             style={innerStyles.metamaskName}
             resizeMethod={'auto'}
-          />
+          /> */}
+          <Text style={innerStyles.gonName}>{"GON"}</Text>
         </View>
       </View>
     ),

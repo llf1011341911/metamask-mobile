@@ -174,7 +174,7 @@ export default class AppInformation extends PureComponent {
             />
             <Text style={styles.versionInfo}>{this.state.appInfo}</Text>
           </View>
-          <Text style={styles.title}>{strings('app_information.links')}</Text>
+          {/* <Text style={styles.title}>{strings('app_information.links')}</Text>
           <View style={styles.links}>
             <TouchableOpacity onPress={this.onPrivacyPolicy}>
               <Text style={styles.link}>
@@ -209,7 +209,7 @@ export default class AppInformation extends PureComponent {
                 {strings('app_information.contact_us')}
               </Text>
             </TouchableOpacity>
-          </View>
+          </View> */}
         </ScrollView>
       </SafeAreaView>
     );

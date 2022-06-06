@@ -401,9 +401,9 @@ class AdvancedSettings extends PureComponent {
               <Text style={styles.title}>
                 {strings('app_settings.state_logs')}
               </Text>
-              <Text style={styles.desc}>
+              {/* <Text style={styles.desc}>
                 {strings('app_settings.state_logs_desc')}
-              </Text>
+              </Text> */}
               <StyledButton
                 type="info"
                 onPress={this.downloadStateLogs}
