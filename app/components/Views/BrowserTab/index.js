@@ -1462,30 +1462,29 @@ export const BrowserTab = (props) => {
       >
         <View style={styles.webview}>
           {!!entryScriptWeb3 && firstUrlLoaded && (
-            // <WebView
-            //   decelerationRate={'normal'}
-            //   ref={webviewRef}
-            //   renderError={() => (
-            //     <WebviewError error={error} returnHome={returnHome} />
-            //   )}
-            //   source={{ uri: initialUrl }}
-            //   injectedJavaScriptBeforeContentLoaded={entryScriptWeb3}
-            //   style={styles.webview}
-            //   onLoadStart={onLoadStart}
-            //   onLoad={onLoad}
-            //   onLoadEnd={onLoadEnd}
-            //   onLoadProgress={onLoadProgress}
-            //   onMessage={onMessage}
-            //   onError={onError}
-            //   onShouldStartLoadWithRequest={onShouldStartLoadWithRequest}
-            //   userAgent={USER_AGENT}
-            //   sendCookies
-            //   javascriptEnabled
-            //   allowsInlineMediaPlayback
-            //   useWebkit
-            //   testID={'browser-webview'}
-            // />
-            <Text></Text>
+            <WebView
+              decelerationRate={'normal'}
+              ref={webviewRef}
+              renderError={() => (
+                <WebviewError error={error} returnHome={returnHome} />
+              )}
+              source={{ uri: initialUrl }}
+              injectedJavaScriptBeforeContentLoaded={entryScriptWeb3}
+              style={styles.webview}
+              onLoadStart={onLoadStart}
+              onLoad={onLoad}
+              onLoadEnd={onLoadEnd}
+              onLoadProgress={onLoadProgress}
+              onMessage={onMessage}
+              onError={onError}
+              onShouldStartLoadWithRequest={onShouldStartLoadWithRequest}
+              userAgent={USER_AGENT}
+              sendCookies
+              javascriptEnabled
+              allowsInlineMediaPlayback
+              useWebkit
+              testID={'browser-webview'}
+            />
           )}
         </View>
         {renderProgressBar()}

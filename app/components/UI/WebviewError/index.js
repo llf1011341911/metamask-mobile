@@ -81,6 +81,46 @@ export default class WebviewError extends PureComponent {
     this.props.returnHome();
   };
 
+  // render() {
+  //   const { error } = this.props;
+  //   const colors = this.context.colors || mockTheme.colors;
+  //   const styles = createStyles(colors);
+
+  //   return error ? (
+  //     <View style={styles.wrapper}>
+  //       <View style={styles.foxWrapper}>
+  //         {/* {Device.isAndroid() ? ( */}
+  //         <Image
+  //           source={require('../../../images/gon.png')}
+  //           style={styles.image}
+  //           resizeMethod={'auto'}
+  //         />
+  //         {/* ) : (
+  //           <AnimatedFox bgColor={colors.background.default} />
+  //         )} */}
+  //       </View>
+  //       <View style={styles.textWrapper}>
+  //         <Text style={styles.errorTitle}>
+  //           {strings('webview_error.title')}
+  //         </Text>
+  //         <Text style={styles.errorMessage}>
+  //           {strings('webview_error.message')}
+  //         </Text>
+  //         {error.description ? (
+  //           <Text style={styles.errorInfo}>{`${strings(
+  //             'webview_error.reason',
+  //           )}: ${error.description}`}</Text>
+  //         ) : null}
+  //       </View>
+  //       <View style={styles.buttonWrapper}>
+  //         <StyledButton type={'confirm'} onPress={this.returnHome}>
+  //           {strings('webview_error.return_home')}
+  //         </StyledButton>
+  //       </View>
+  //     </View>
+  //   ) : null;
+  // }
+
   render() {
     const { error } = this.props;
     const colors = this.context.colors || mockTheme.colors;
@@ -88,35 +128,7 @@ export default class WebviewError extends PureComponent {
 
     return error ? (
       <View style={styles.wrapper}>
-        <View style={styles.foxWrapper}>
-          {/* {Device.isAndroid() ? ( */}
-          <Image
-            source={require('../../../images/gon.png')}
-            style={styles.image}
-            resizeMethod={'auto'}
-          />
-          {/* ) : (
-            <AnimatedFox bgColor={colors.background.default} />
-          )} */}
-        </View>
-        <View style={styles.textWrapper}>
-          <Text style={styles.errorTitle}>
-            {strings('webview_error.title')}
-          </Text>
-          <Text style={styles.errorMessage}>
-            {strings('webview_error.message')}
-          </Text>
-          {error.description ? (
-            <Text style={styles.errorInfo}>{`${strings(
-              'webview_error.reason',
-            )}: ${error.description}`}</Text>
-          ) : null}
-        </View>
-        <View style={styles.buttonWrapper}>
-          <StyledButton type={'confirm'} onPress={this.returnHome}>
-            {strings('webview_error.return_home')}
-          </StyledButton>
-        </View>
+        <Text>{error.description}</Text>
       </View>
     ) : null;
   }
