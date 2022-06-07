@@ -92,6 +92,9 @@ const createStyles = (colors) =>
     setting: {
       marginTop: 50,
     },
+    newSetting: {
+      marginTop: 10,
+    },
     switch: {
       alignSelf: 'flex-start',
     },
@@ -354,7 +357,7 @@ class Settings extends PureComponent {
               )}
             </View>
           </View> */}
-          <View style={styles.setting}>
+          {/* <View style={styles.setting}>
             <Text style={styles.title}>
               {strings('app_settings.current_language')}
             </Text>
@@ -371,8 +374,8 @@ class Settings extends PureComponent {
                 />
               )}
             </View>
-          </View>
-          <View style={styles.setting}>
+          </View> */}
+          {/* <View style={styles.setting}>
             <Text style={styles.title}>
               {strings('app_settings.search_engine')}
             </Text>
@@ -390,8 +393,8 @@ class Settings extends PureComponent {
                 />
               )}
             </View>
-          </View>
-          <View style={styles.setting}>
+          </View> */}
+          <View style={styles.newSetting}>
             <Text style={styles.title}>
               {strings('app_settings.hide_zero_balance_tokens_title')}
             </Text>
