@@ -350,7 +350,7 @@ const App = ({ userLoggedIn }) => {
             )}
           </Stack.Navigator>
         </NavigationContainer>
-        {renderSplash()}
+        {/* {renderSplash()} */}
       </>
     )) ||
     null

@@ -213,6 +213,7 @@ class Settings extends PureComponent {
   };
 
   selectSearchEngine = (searchEngine) => {
+    // alert(JSON.stringify(searchEngine))
     this.props.setSearchEngine(searchEngine);
   };
 
@@ -311,7 +312,7 @@ class Settings extends PureComponent {
     return (
       <ScrollView style={styles.wrapper}>
         <View style={styles.inner}>
-          <View style={[styles.setting, styles.firstSetting]}>
+          {/* <View style={[styles.setting, styles.firstSetting]}>
             <Text style={styles.title}>
               {strings('app_settings.conversion_title')}
             </Text>
@@ -324,6 +325,7 @@ class Settings extends PureComponent {
                 onValueChange={this.selectCurrency}
                 label={strings('app_settings.current_conversion')}
                 options={infuraCurrencyOptions}
+                disabled = {true}
               />
             </View>
           </View>
@@ -347,10 +349,11 @@ class Settings extends PureComponent {
                   )}
                   valueSecond={'Fiat'}
                   selectedValue={primaryCurrency}
+                  disabled={true}
                 />
               )}
             </View>
-          </View>
+          </View> */}
           <View style={styles.setting}>
             <Text style={styles.title}>
               {strings('app_settings.current_language')}
@@ -379,6 +382,7 @@ class Settings extends PureComponent {
             <View style={styles.picker}>
               {this.searchEngineOptions && (
                 <SelectComponent
+                  // disabled={true}
                   selectedValue={this.props.searchEngine}
                   onValueChange={this.selectSearchEngine}
                   label={strings('app_settings.search_engine')}

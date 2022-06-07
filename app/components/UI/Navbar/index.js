@@ -1080,7 +1080,7 @@ export function getWalletNavbarOptions(
   }
 
   return {
-    headerTitle: () => <NavbarTitle title={title} />,
+    headerTitle: () => <NavbarTitle title="" />,
     headerLeft: () => (
       <TouchableOpacity
         onPress={openDrawer}

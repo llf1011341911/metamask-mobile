@@ -111,6 +111,8 @@ export default class SelectComponent extends PureComponent {
      * Callback for value change
      */
     onValueChange: PropTypes.func,
+
+    disabled:PropTypes.bool
   };
 
   state = {
@@ -131,6 +133,9 @@ export default class SelectComponent extends PureComponent {
   };
 
   showPicker = () => {
+    if (this.props.disabled) {
+        return;
+    }
     dismissKeyboard();
     this.setState({ pickerVisible: true });
     Device.isIos() &&

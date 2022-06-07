@@ -72,15 +72,23 @@ export default class PickComponent extends PureComponent {
      * Current selected value
      */
     selectedValue: PropTypes.string,
+
+    disabled:PropTypes.bool
   };
 
   pickFirst = () => {
-    const { pick, valueFirst } = this.props;
+    const { pick, valueFirst,disabled } = this.props;
+    if(disabled){
+      return;
+    }
     pick && pick(valueFirst);
   };
 
   pickSecond = () => {
-    const { pick, valueSecond } = this.props;
+    const { pick, valueSecond,disabled } = this.props;
+    if(disabled){
+      return;
+    }
     pick && pick(valueSecond);
   };
 
