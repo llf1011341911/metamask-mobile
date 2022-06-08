@@ -128,7 +128,7 @@ export default class WebviewError extends PureComponent {
 
     return error ? (
       <View style={styles.wrapper}>
-        <Text>{error.description}</Text>
+        
       </View>
     ) : null;
   }

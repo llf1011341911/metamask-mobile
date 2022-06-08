@@ -7,6 +7,7 @@ import {
   View,
   AppState,
   Appearance,
+  Image
 } from 'react-native';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -101,6 +102,7 @@ class LockScreen extends PureComponent {
     this.appState = 'background';
     AppState.addEventListener('change', this.handleAppStateChange);
     this.mounted = true;
+    this.onAnimationFinished();
   }
 
   handleAppStateChange = async (nextAppState) => {
@@ -206,20 +208,21 @@ class LockScreen extends PureComponent {
 
     if (!this.state.ready) {
       return (
-        <LottieView
-          // eslint-disable-next-line react/jsx-no-bind
-          ref={(animation) => {
-            this.firstAnimation = animation;
-          }}
-          style={styles.animation}
-          source={require('../../../animations/bounce.json')}
-        />
+        // <LottieView
+        //   // eslint-disable-next-line react/jsx-no-bind
+        //   ref={(animation) => {
+        //     this.firstAnimation = animation;
+        //   }}
+        //   style={styles.animation}
+        //   source={require('../../../animations/bounce.json')}
+        // />
+        <Image style={styles.animation} source={require("../../../images/gon.png")}/>
       );
     }
 
     return (
       <View style={styles.foxAndName}>
-        <LottieView
+        {/* <LottieView
           // eslint-disable-next-line react/jsx-no-bind
           ref={(animation) => {
             this.secondAnimation = animation;
@@ -237,7 +240,8 @@ class LockScreen extends PureComponent {
           style={styles.metamaskName}
           loop={false}
           source={wordmark}
-        />
+        /> */}
+        <Image style={styles.animation} source={require("../../../images/gon.png")}/>
       </View>
     );
   }

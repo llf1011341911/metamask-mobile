@@ -974,13 +974,6 @@ class DrawerView extends PureComponent {
     return [
       [
         {
-          name: strings('experimental_settings.wallet_connect_dapps'),
-          icon: this.getIcon('globe'),
-          selectedIcon: this.getSelectedIcon('globe'),
-          action: this.goToWalletConnect,
-          routeNames: ['WalletConnectSessionsView'],
-        },
-        {
           name: strings('drawer.browser'),
           icon: this.getIcon('globe'),
           selectedIcon: this.getSelectedIcon('globe'),
@@ -1001,6 +994,13 @@ class DrawerView extends PureComponent {
           action: this.goToTransactionHistory,
           routeNames: ['TransactionsView'],
         },
+        {
+          name: strings('experimental_settings.wallet_connect_dapps'),
+          icon: this.getIcon('globe'),
+          selectedIcon: this.getSelectedIcon('globe'),
+          action: this.goToWalletConnect,
+          routeNames: ['WalletConnectSessionsView'],
+        }
       ],
       [
         {

@@ -110,10 +110,10 @@ project.ext.react = [
 
 apply from: "../../node_modules/react-native/react.gradle"
 
-project.ext.sentryCli = [
-	logLevel: "debug",
-	sentryProperties: System.getenv('SENTRY_PROPERTIES') ? System.getenv('SENTRY_PROPERTIES') : '../../sentry.properties'
-]
+ project.ext.sentryCli = [
+ 	logLevel: "debug",
+ 	sentryProperties: System.getenv('SENTRY_PROPERTIES') ? System.getenv('SENTRY_PROPERTIES') : '../../sentry.properties'
+ ]
 
 apply from: "../../node_modules/@sentry/react-native/sentry.gradle"
 
