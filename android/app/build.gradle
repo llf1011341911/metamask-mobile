@@ -158,11 +158,11 @@ android {
 
 	defaultConfig {
 //		applicationId "com.gaiaopen.wallet"
-		applicationId "io.metamask"
+		applicationId "com.gaiaopen_mobile"
 		minSdkVersion rootProject.ext.minSdkVersion
 		targetSdkVersion rootProject.ext.targetSdkVersion
-		versionCode 877
-		versionName "5.0.1"
+		versionCode 9
+		versionName "1.1"
 		multiDexEnabled true
 		testBuildType System.getProperty('testBuildType', 'debug')
 		missingDimensionStrategy "minReactNative", "minReactNative46"
@@ -189,10 +189,10 @@ android {
 
 	signingConfigs {
 		release {
-			storeFile file('../keystores/release.keystore')
-			storePassword "metamask123456"
-			keyAlias "MetaMask"
-			keyPassword "metamask123456"
+      storeFile file('../keystores/gaiaopen')
+      keyAlias = 'my-key-alias'
+      storePassword '123456'
+      keyPassword '123456'
 		}
 		debug {
             storeFile file('debug.keystore')

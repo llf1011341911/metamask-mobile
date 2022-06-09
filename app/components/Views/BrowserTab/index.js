@@ -64,7 +64,7 @@ import { getRpcMethodMiddleware } from '../../../core/RPCMethods/RPCMethodMiddle
 import { useAppThemeFromContext, mockTheme } from '../../../util/theme';
 
 const { HOMEPAGE_URL, USER_AGENT, NOTIFICATION_NAMES } = AppConstants;
-const HOMEPAGE_HOST = 'home.metamask.io';
+const HOMEPAGE_HOST = 'www.gaiaopen.com';
 const MM_MIXPANEL_TOKEN = process.env.MM_MIXPANEL_TOKEN;
 
 const ANIMATION_TIMING = 300;
@@ -588,15 +588,16 @@ export const BrowserTab = (props) => {
    */
   const go = useCallback(
     async (url, initialCall) => {
-      if (url.includes("home.metamask.io")) {
-        url = "https://www.gaiaopen.com/apps"
-      }
+      // if (url.includes("home.metamask.io")) {
+      //   url = "https://www.gaiaopen.com/apps"
+      // }
       const hasProtocol = url.match(/^[a-z]*:\/\//) || isHomepage(url);
       const sanitizedURL = hasProtocol ? url : `${props.defaultProtocol}${url}`;
       const { hostname, query, pathname } = new URL(sanitizedURL);
 
       let urlToGo = sanitizedURL;
       const isEnsUrl = isENSUrl(url);
+
       const { current } = webviewRef;
       if (isEnsUrl) {
         current && current.stopLoading();
@@ -606,6 +607,7 @@ export const BrowserTab = (props) => {
           hash,
           reload,
         } = await handleIpfsContent(url, { hostname, query, pathname });
+
         if (reload) return go(ensUrl);
         urlToGo = ensUrl;
         sessionENSNames[urlToGo] = { hostname, hash, type };
@@ -626,6 +628,7 @@ export const BrowserTab = (props) => {
         return sanitizedURL;
       }
       handleNotAllowedUrl(urlToGo);
+
       return null;
     },
     [
