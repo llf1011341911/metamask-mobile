@@ -41,7 +41,7 @@ import Identicon from '../Identicon';
 import AssetActionButton from '../AssetActionButton';
 import EthereumAddress from '../EthereumAddress';
 import { fontStyles, baseStyles } from '../../../styles/common';
-import { allowedToBuy } from '../FiatOrders';
+import { allowedToBuy,allowGames } from '../FiatOrders';
 import AssetSwapButton from '../Swaps/components/AssetSwapButton';
 import ClipboardManager from '../../../core/ClipboardManager';
 import { ThemeContext, mockTheme } from '../../../util/theme';
@@ -215,6 +215,9 @@ class AccountOverview extends PureComponent {
     accountLabel: '',
     originalAccountLabel: '',
     ens: undefined,
+    showGames:false,
+    metaverseAddress:"0xea90334fc52a42ce5a81039c9c886898e250cc92",
+    metaverseUrl:"https://data-seed-prebsc-1-s1.binance.org:8545"
   };
 
   editableLabelRef = React.createRef();
@@ -239,6 +242,7 @@ class AccountOverview extends PureComponent {
   componentDidMount = () => {
     const { identities, selectedAddress, onRef } = this.props;
     const accountLabel = renderAccountName(selectedAddress, identities);
+    this.initAllowGames()
     this.setState({ accountLabel });
     onRef && onRef(this);
     InteractionManager.runAfterInteractions(() => {
@@ -254,7 +258,16 @@ class AccountOverview extends PureComponent {
       requestAnimationFrame(() => {
         this.doENSLookup();
       });
+
+      this.initAllowGames()
     }
+  }
+
+  async initAllowGames(){
+    const worldCount = await allowGames(this.state.metaverseAddress,this.state.metaverseUrl)
+    this.setState({
+      showGames:worldCount >0
+    })
   }
 
   setAccountLabel = () => {
@@ -322,7 +335,9 @@ class AccountOverview extends PureComponent {
     this.props.navigation.navigate('Games',{
       screen:"GamesListScreen",
       params:{
-        title:"Games"
+        title:"Games",
+        metaverseAddress:this.state.metaverseAddress,
+        metaverseUrl:this.state.metaverseUrl
       }
     });
   };
@@ -362,7 +377,7 @@ class AccountOverview extends PureComponent {
     )}`;
 
     if (!address) return null;
-    const { accountLabelEditable, accountLabel, ens } = this.state;
+    const { accountLabelEditable, accountLabel, ens,showGames } = this.state;
 
     const isQRHardwareWalletAccount = isQRHardwareAccount(address);
 
@@ -491,7 +506,7 @@ class AccountOverview extends PureComponent {
                 />
               )}
               {/* add games */}
-              {allowedToBuy(chainId) && (
+              {showGames&& (
                 <AssetActionButton
                   icon="buy"
                   onPress={this.onGames}

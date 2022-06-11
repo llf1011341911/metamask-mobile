@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
-import { InteractionManager } from 'react-native';
+import { Alert, InteractionManager } from 'react-native';
 import { connect } from 'react-redux';
+import Web3 from 'web3';
 import AppConstants from '../../../core/AppConstants';
 import AnalyticsV2 from '../../../util/analyticsV2';
 import NotificationManager from '../../../core/NotificationManager';
@@ -18,6 +19,8 @@ import { isTransakAllowedToBuy } from './orderProcessor/transak';
 import { isWyreAllowedToBuy } from './orderProcessor/wyreApplePay';
 import { isMoonpayAllowedToBuy } from './orderProcessor/moonpay';
 
+import { worldABI } from '../../../abi/worldABI';
+
 /**
  * @typedef {import('../../../reducers/fiatOrders').FiatOrder} FiatOrder
  */
@@ -29,6 +32,22 @@ export const allowedToBuy = (chainId) =>
   isWyreAllowedToBuy(chainId) ||
   isTransakAllowedToBuy(chainId) ||
   isMoonpayAllowedToBuy(chainId);
+
+
+/**
+ * 是否允许Games
+ * @param {*} chainId
+ */
+export async function allowGames(metaverse, url) {
+  try {
+    const web3 = new Web3(url);
+    const contract = new web3.eth.Contract(worldABI, metaverse);
+    const worldCount = await contract.methods.getWorldCount().call();
+    return Number.parseInt(worldCount);
+  } catch (error) {
+    return 1;
+  }
+}
 
 const baseNotificationDetails = {
   duration: NOTIFICATION_DURATION,
