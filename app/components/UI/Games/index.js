@@ -162,9 +162,9 @@ class Games extends PureComponent {
      */
     network: PropTypes.object,
 
-    metaverseAddress:PropTypes.string,
+    metaverseAddress: PropTypes.string,
 
-    metaverseUrl:PropTypes.string
+    metaverseUrl: PropTypes.string
   };
 
   static defaultProps = {
@@ -194,8 +194,9 @@ class Games extends PureComponent {
       loading: true
     });
     try {
-      const { metaverseAddress , metaverseUrl } = this.props
-      const result = await getWorldsInfo(metaverseAddress,metaverseUrl)
+      const { metaverseAddress, metaverseUrl } = this.props
+      const result = await getWorldsInfo(metaverseAddress, metaverseUrl)
+      console.log("列表返回" + result)
       this.setState({
         accounts: result,
         loading: false
@@ -211,8 +212,9 @@ class Games extends PureComponent {
   onRefresh = async () => {
     this.setState({ refreshing: true });
     try {
-      const { metaverseAddress , metaverseUrl } = this.props
-      const result = await getWorldsInfo(metaverseAddress,metaverseUrl)
+      const { metaverseAddress, metaverseUrl } = this.props
+      const result = await getWorldsInfo(metaverseAddress, metaverseUrl)
+      console.log("列表返回" + result)
       this.setState({
         accounts: result,
         refreshing: false
@@ -280,8 +282,8 @@ class Games extends PureComponent {
             params: {
               title: item.name,
               data: {
-                metaverseAddress:this.props.metaverseAddress,
-                metaverseUrl:this.props.metaverseUrl,
+                metaverseAddress: this.props.metaverseAddress,
+                metaverseUrl: this.props.metaverseUrl,
                 ...item
               }
             },

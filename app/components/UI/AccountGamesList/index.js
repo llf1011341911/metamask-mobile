@@ -26,7 +26,7 @@ import { doENSReverseLookup } from '../../../util/ENSUtils';
 import AccountElement from './AccountElement';
 import { connect } from 'react-redux';
 import { ThemeContext, mockTheme } from '../../../util/theme';
-import {} from "../../UI/Games/fetch"
+import { } from "../../UI/Games/fetch"
 
 const createStyles = (colors) =>
   StyleSheet.create({
@@ -134,7 +134,11 @@ class AccountGamesList extends PureComponent {
 
     metaverseUrl: PropTypes.string,
 
-    openBrower:PropTypes.func
+    openBrower: PropTypes.func,
+
+    website: PropTypes.string,
+
+    metaverseAddress: PropTypes.string
   };
 
   state = {
@@ -142,7 +146,7 @@ class AccountGamesList extends PureComponent {
     loading: false,
     orderedAccounts: {},
     accountsENS: {},
-    includeGames:false
+    includeGames: false
   };
 
   flatList = React.createRef();
@@ -181,6 +185,18 @@ class AccountGamesList extends PureComponent {
       index: this.state.selectedAccountIndex,
       animated: true,
     });
+  }
+
+  handleSelect = () => {
+    const { metaverseAddress } = this.props
+    const { orderedAccounts } = this.state;
+    orderedAccounts.forEach((item, index) => {
+      if (item.isSelected) {
+        this.setState({
+          includeGames: item.address == metaverseAddress
+        })
+      }
+    })
   }
 
   onAccountChange = async (newIndex) => {
@@ -238,6 +254,7 @@ class AccountGamesList extends PureComponent {
       const orderedAccounts = this.getAccounts();
       this.mounted && this.setState({ orderedAccounts });
     });
+    this.handleSelect()
   };
 
   importAccount = () => {
@@ -349,10 +366,10 @@ class AccountGamesList extends PureComponent {
     );
   };
 
-  openBrower = ()=>{
-    const { openBrower } = this.props
+  openBrower = () => {
+    const { openBrower, website } = this.props
     if (openBrower) {
-      openBrower("http://baidu.com")
+      openBrower(website)
     }
   }
 
@@ -424,8 +441,7 @@ class AccountGamesList extends PureComponent {
   keyExtractor = (item) => item.address;
 
   render() {
-    const { orderedAccounts ,includeGames} = this.state;
-    const { enableAccountsAddition } = this.props;
+    const { orderedAccounts, includeGames } = this.state;
     const colors = this.context.colors || mockTheme.colors;
     const styles = createStyles(colors);
 
@@ -451,7 +467,7 @@ class AccountGamesList extends PureComponent {
           onPress={this.openBrower}
           style={styles.footerButton}
         >
-          <Text style={styles.btnText}>{includeGames?strings('games.entrance_games'):strings('games.change_wallet_and_entrance_games')}</Text>
+          <Text style={styles.btnText}>{includeGames ? strings('games.entrance_games') : strings('games.change_wallet_and_entrance_games')}</Text>
         </TouchableOpacity>
       </SafeAreaView>
     );

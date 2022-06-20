@@ -134,16 +134,18 @@ class GamesDetailScreen extends PureComponent {
     );
   };
 
-  componentDidMount =async()=> {
+  componentDidMount = async () => {
     setTimeout(() => {
       this.getDetail();
     }, 100);
     this.updateNavBar();
-   
+
   }
 
   getDetail = async () => {
+
     const { detailData } = this.state;
+    console.log("详情数据1" + JSON.stringify(detailData))
     if (detailData.id == null) {
       return;
     }
@@ -151,7 +153,8 @@ class GamesDetailScreen extends PureComponent {
       loading: true,
     });
     try {
-      const detail = await getGamesDetail(detailData.world,detailData.metaverseAddress,detailData.metaverseUrl);
+      const detail = await getGamesDetail(detailData.world, detailData.metaverseAddress, detailData.metaverseUrl);
+      console.log("详情数据" + JSON.stringify(detail))
       this.setState({
         detailData: {
           ...detailData,
@@ -240,11 +243,13 @@ class GamesDetailScreen extends PureComponent {
               <AccountGamesList
                 enableAccountsAddition={false}
                 identities={identities}
+                website={detailData.url}
                 metaverseUrl={detailData.metaverseUrl}
-                openBrower ={url =>{
+                metaverseAddress={detailData.metaverseAddress}
+                openBrower={url => {
                   this.props.navigation.navigate('BrowserHome', {
                     screen: "BrowserView",
-                    params:{
+                    params: {
                       newTabUrl: url,
                       timestamp: Date.now(),
                     }
@@ -287,4 +292,4 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch(setSelectedAsset(selectedAsset)),
 });
 
-export default connect(mapStateToProps,mapDispatchToProps)(GamesDetailScreen);
+export default connect(mapStateToProps, mapDispatchToProps)(GamesDetailScreen);

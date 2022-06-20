@@ -19,7 +19,7 @@ import { isTransakAllowedToBuy } from './orderProcessor/transak';
 import { isWyreAllowedToBuy } from './orderProcessor/wyreApplePay';
 import { isMoonpayAllowedToBuy } from './orderProcessor/moonpay';
 
-import { worldABI,metaverseABI } from '../../../abi/worldABI';
+import { worldABI, metaverseABI } from '../../../abi/worldABI';
 import { getWeb3 } from "../../../util/web3"
 
 /**
@@ -43,12 +43,11 @@ export async function allowGames(metaverse, url) {
   try {
     const web3 = getWeb3(url);
     const contract = new web3.eth.Contract(metaverseABI, metaverse);
-    console.log("参数"+metaverse +"地址："+url)
     const worldCount = await contract.methods.getWorldCount().call();
-    console.log("数据正常"+worldCount)
+    console.log("数据正常" + worldCount)
     return Number.parseInt(worldCount);
   } catch (error) {
-    console.log("数据异常"+error)
+    console.log("数据异常" + error)
     return 0;
   }
 }

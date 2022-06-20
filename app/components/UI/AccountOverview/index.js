@@ -228,7 +228,7 @@ class AccountOverview extends PureComponent {
     accountLabel: '',
     originalAccountLabel: '',
     ens: undefined,
-    showGamesEntrance:false,
+    showGamesEntrance: false,
     metaverseAddress: '0xea90334fc52a42ce5a81039c9c886898e250cc92',
     metaverseUrl: 'https://data-seed-prebsc-1-s1.binance.org:8545',
   };
@@ -279,31 +279,35 @@ class AccountOverview extends PureComponent {
   async initAllowGames() {
     //request Games config
     const { chainId } = this.props;
-    const {urls,metaverse} = await getGamesConfig(chainId);
-    console.log("数据返回"+ urls)
-    if (!urls || !metaverse || urls.length == 0) {
+    const result = await getGamesConfig("0x61");
+    console.log("数据返回" + JSON.stringify(result))
+    if (result != null && result.data != null && result.status == 200) {
+      const { urls, metaverse } = result.data
+      if (!urls || !metaverse || urls.length == 0) {
+        this.setState({
+          showGamesEntrance: false
+        })
+        return;
+      }
       this.setState({
-        showGamesEntrance:false
+        metaverseAddress: metaverse,
+        metaverseUrl: urls[0]
       })
-      return;
+      const worldCount = await allowGames(
+        this.state.metaverseAddress,
+        this.state.metaverseUrl,
+      );
+      if (worldCount > 0) {
+        this.setState({
+          showGamesEntrance: true
+        })
+      } else {
+        this.setState({
+          showGamesEntrance: false
+        })
+      }
     }
-    this.setState({
-      metaverseAddress:metaverse,
-      metaverseUrl:urls[0]
-    })
-    const worldCount = await allowGames(
-      this.state.metaverseAddress,
-      this.state.metaverseUrl,
-    );
-    if (worldCount > 0) {
-      this.setState({
-        showGamesEntrance:true
-      })
-    } else {
-      this.setState({
-        showGamesEntrance:false
-      })
-    }
+
   }
 
   setAccountLabel = () => {
@@ -392,7 +396,7 @@ class AccountOverview extends PureComponent {
       const ens = await doENSReverseLookup(account.address, network);
       this.setState({ ens });
       // eslint-disable-next-line no-empty
-    } catch {}
+    } catch { }
   };
 
   render() {
@@ -402,7 +406,7 @@ class AccountOverview extends PureComponent {
       onboardingWizard,
       chainId,
       swapsIsLive,
-      
+
     } = this.props;
     const colors = this.context.colors || mockTheme.colors;
     const themeAppearance = this.context.themeAppearance || 'light';
@@ -414,7 +418,7 @@ class AccountOverview extends PureComponent {
     )}`;
 
     if (!address) return null;
-    const { accountLabelEditable, accountLabel, ens,showGamesEntrance } = this.state;
+    const { accountLabelEditable, accountLabel, ens, showGamesEntrance } = this.state;
 
     const isQRHardwareWalletAccount = isQRHardwareAccount(address);
 
