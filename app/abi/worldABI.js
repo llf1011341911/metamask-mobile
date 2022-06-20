@@ -715,7 +715,7 @@ export const worldABI = [
   },
 ];
 
-const metaverseABI = [
+export const metaverseABI = [
   {
     inputs: [],
     stateMutability: 'nonpayable',

@@ -62,6 +62,8 @@ export default {
     POLLING_FREQUENCY: 10000,
   },
   GAMES:{
+    GAMES_API_URL_PRODUCTION:"http://api.gonwallet.io/",
+    GAMES_API_URL_STAGING:"http://api.gonwallet.io/",
     WEB3:"https://data-seed-prebsc-1-s1.binance.org:8545"
   },
   DEEPLINKS: {
@@ -118,6 +120,6 @@ export default {
   },
   BUNDLE_IDS: {
     IOS: 'io.metamask.MetaMask',
-    ANDROID: 'io.metamask',
+    ANDROID: 'com.gaiaopen_mobile',
   },
 };

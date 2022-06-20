@@ -1,10 +1,12 @@
 import { useMemo } from 'react';
 import axios from 'axios';
 import qs from 'query-string';
-import Web3 from "web3"
+import Web3 from 'web3';
 import AppConstants from '../../../core/AppConstants';
 import Logger from '../../../util/Logger';
-import { worldBuild } from "./world_build"
+import { worldBuild } from './world_build';
+import { getWeb3 } from '../../../util/web3';
+import { worldABI } from '../../../abi/worldABI';
 
 const gamesWeb3 = new Web3(AppConstants.GAMES.WEB3);
 
@@ -13,11 +15,41 @@ const worldAddresses = [
   '0xb70b6dfbb7152dcb8ce938eda1d1262b8651aee8',
 ];
 
-export async function findAccountsByAddresses(addresses) {
-  const batchRequest = new gamesWeb3.eth.BatchRequest();
-  const { abi } = worldBuild;
+// async function getWorldsInfo(metaverse, url) {
+//   const web3 = getWeb3(url);
+//   const contract = new web3.eth.Contract(metaverseABI, metaverse);
+//   const addresses = await contract.methods.getWorlds().call();
+//   const batchRequest = new web3.eth.BatchRequest();
+//   const promises = addresses.map(
+//     (address) =>
+//       new Promise((resolve, reject) => {
+//         const req = contract.methods
+//           .getWorldInfo(address)
+//           .call.request({}, (err, res) => {
+//             if (!err) {
+//               resolve(res);
+//             } else {
+//               reject(err);
+//             }
+//           });
+//         batchRequest.add(req);
+//       }),
+//   );
+//   batchRequest.execute();
+//   return Promise.all(promises);
+// }
+
+// async function getWorldInfo(address, metaverse, url) {
+//   const web3 = getWeb3(url);
+//   const contract = new web3.eth.Contract(metaverseABI, metaverse);
+//   return contract.methods.getWorldInfo(address).call();
+// }
+
+export async function findAccountsByAddresses(addresses, worldAddresses, url) {
+  const web3 = getWeb3(url);
+  const batchRequest = new web3.eth.BatchRequest();
   const contracts = worldAddresses.map(
-    (address) => new gamesWeb3.eth.Contract(abi, address)
+    (address) => new web3.eth.Contract(worldABI, address),
   );
   const promises = [];
   addresses.forEach((address) => {
@@ -26,23 +58,12 @@ export async function findAccountsByAddresses(addresses) {
         const req = contract.methods
           .getAccountIdByAddress(address)
           .call.request({}, (err, res) => {
-            console.log(res)
             if (!err) {
-              resolve(
-                res === '0'
-                  ? null
-                  : {
-                    world: {
-                      name: contract.options.address.slice(-6),
-                      icon: '暂无数据',
-                      address: contract.options.address,
-                    },
-                    id: res,
-                    email: '暂无数据',
-                    address,
-                    desc: "暂无数据",
-                  }
-              );
+              resolve({
+                address,
+                accoundID: res,
+                worldAddress: contract.options.address,
+              });
             } else {
               reject(err);
             }
@@ -53,61 +74,59 @@ export async function findAccountsByAddresses(addresses) {
     });
   });
   batchRequest.execute();
-  return (await Promise.all(promises)).filter((account) => account !== null);
+  return await Promise.all(promises);
 }
 
 /**
  * 获取详情
- * @param {*} id 
- * @returns 
+ * @param {*} id
+ * @returns
  */
-export async function getGamesDetail(id, worldAddress) {
-  const { abi } = worldBuild;
-  const contract = new gamesWeb3.eth.Contract(abi, worldAddress);
-  const account = {};
-  const promises = [];
-  const batchRequest = new gamesWeb3.eth.BatchRequest();
-  //get address
-  let promise = new Promise((resolve, reject) => {
-    const req = contract.methods
-      .getAddressById(id)
-      .call.request({}, (err, res) => {
-        console.log("详情数据" + res)
-        if (!err) {
-          account.address = res;
-          resolve(res);
-        } else {
-          reject(err);
-        }
-      });
-    batchRequest.add(req);
-  });
-  promises.push(promise);
-  //get trust world
-  promise = new Promise((resolve, reject) => {
-    const req = contract.methods
-      .isTrustWorld(id)
-      .call.request({}, (err, res) => {
-        console.log("详情数据" + res)
-        if (!err) {
-          account.trustWorld = res;
-          resolve(res);
-        } else {
-          reject(err);
-        }
-      });
-    batchRequest.add(req);
-  });
-  promises.push(promise);
-  //TODO
-  //get trust admin
-  //get homepage
-  //get desc
-  //get email
-  //get icon
-  batchRequest.execute();
-  await Promise.all(promises);
-  return gamesWeb3.utils.hexToBytes(account.address).every((byte) => byte === 0)
-    ? null
-    : account;
+export async function getGamesDetail(address, metaverse, url) {
+  const web3 = getWeb3(url);
+  const contract = new web3.eth.Contract(metaverseABI, metaverse);
+  return contract.methods.getWorldInfo(address).call();
 }
+
+export async function getWorldsInfo(metaverse, url) {
+  return [
+    {
+      description:
+        'Call of Duty is a first-person shooter video game franchise published by Activision. Starting out in 2003, it first focused on games set in World War II.',
+      icon: '1',
+      name: 'Call of Duty',
+      url: 'https://www.callofduty.com',
+      world: '0xA3859bF54bFaDc1fa43DCD7db67aFA9a967cDd37',
+    },
+  ];
+
+  const web3 = getWeb3(url);
+
+  const contract = new web3.eth.Contract(worldABI, metaverse);
+  const addresses = await contract.methods.getWorlds().call();
+  const batchRequest = new web3.eth.BatchRequest();
+
+  const promises = addresses.map(
+    (address) =>
+      new Promise((resolve, reject) => {
+        const req = contract.methods
+          .getWorldInfo(address)
+          .call.request({}, (err, res) => {
+            if (!err) {
+              resolve(res);
+            } else {
+              reject(err);
+            }
+          });
+        batchRequest.add(req);
+      }),
+  );
+  batchRequest.execute();
+  return Promise.all(promises);
+}
+
+// export async function getWorldInfo(address, metaverse, url) {
+//   const web3 = getWeb3(url);
+//   const contract = new web3.eth.Contract(metaverseABI, metaverse);
+//   return contract.methods.getWorldInfo(address).call();
+// }

@@ -228,7 +228,7 @@ buildIosReleaseE2E(){
 
 buildAndroidRelease(){
 	if [ "$PRE_RELEASE" = false ] ; then
-		adb uninstall io.metamask || true
+		adb uninstall com.gaiaopen_mobile || true
 	fi
 	prebuild_android
 

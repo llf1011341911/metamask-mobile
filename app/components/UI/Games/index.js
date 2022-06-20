@@ -41,7 +41,7 @@ import UpdateEIP1559Tx from '../UpdateEIP1559Tx';
 import { collectibleContractsSelector } from '../../../reducers/collectibles';
 import { ThemeContext, mockTheme } from '../../../util/theme';
 import withQRHardwareAwareness from '../QRHardware/withQRHardwareAwareness';
-import { findAccountsByAddresses } from './fetch';
+import { getWorldsInfo } from './fetch';
 import WebsiteIcon from '../../UI/WebsiteIcon';
 
 const createStyles = (colors) =>
@@ -161,6 +161,10 @@ class Games extends PureComponent {
      * Object representing the selected network
      */
     network: PropTypes.object,
+
+    metaverseAddress:PropTypes.string,
+
+    metaverseUrl:PropTypes.string
   };
 
   static defaultProps = {
@@ -190,10 +194,8 @@ class Games extends PureComponent {
       loading: true
     });
     try {
-      const result = await findAccountsByAddresses([
-        '0x1c534Eff630aD1598Be108C1230cbbAFb3b12EEA',
-        '0x774d1E211fBfaB83B4D0D6e3224d8AFF265AEf98',
-      ])
+      const { metaverseAddress , metaverseUrl } = this.props
+      const result = await getWorldsInfo(metaverseAddress,metaverseUrl)
       this.setState({
         accounts: result,
         loading: false
@@ -209,10 +211,8 @@ class Games extends PureComponent {
   onRefresh = async () => {
     this.setState({ refreshing: true });
     try {
-      const result = await findAccountsByAddresses([
-        '0x1c534Eff630aD1598Be108C1230cbbAFb3b12EEA',
-        '0x774d1E211fBfaB83B4D0D6e3224d8AFF265AEf98',
-      ])
+      const { metaverseAddress , metaverseUrl } = this.props
+      const result = await getWorldsInfo(metaverseAddress,metaverseUrl)
       this.setState({
         accounts: result,
         refreshing: false
@@ -266,7 +266,7 @@ class Games extends PureComponent {
     index,
   });
 
-  keyExtractor = (item) => item.id.toString();
+  keyExtractor = (item) => item.world.toString();
 
   renderItem = ({ item, index }) => {
     const colors = this.context.colors || mockTheme.colors;
@@ -278,25 +278,21 @@ class Games extends PureComponent {
           this.props.navigation.navigate('Games', {
             screen: 'GameDetailScreen',
             params: {
-              title: item.id + '@' + item.world.name,
-              data: item
+              title: item.name,
+              data: {
+                metaverseAddress:this.props.metaverseAddress,
+                metaverseUrl:this.props.metaverseUrl,
+                ...item
+              }
             },
           });
         }}
         style={styles.row}
       >
-        <WebsiteIcon url={item.world.icon} style={styles.websiteIcon} />
+        <WebsiteIcon url={item.icon} style={styles.websiteIcon} />
         <View style={styles.info}>
-          <Text style={styles.name}>{item.world.name}</Text>
-          <Text style={styles.emailText}>
-            {strings('games.account_id_title')}
-          </Text>
-          <Text style={styles.url}>{item.id + '@' + item.world.name}</Text>
-          <Text style={styles.url}>{item.world.address}</Text>
-          <Text style={styles.emailText}>
-            {strings('games.register_email')}
-          </Text>
-          <Text style={styles.email}>{item.email}</Text>
+          <Text style={styles.name}>{item.name}</Text>
+          <Text style={styles.url}>{item.url}</Text>
           {this.renderDesc(item)}
         </View>
       </TouchableOpacity>
@@ -304,12 +300,12 @@ class Games extends PureComponent {
   };
 
   renderDesc = (meta) => {
-    const { desc } = meta;
+    const { description } = meta;
     const colors = this.context.colors || mockTheme.colors;
     const styles = createStyles(colors);
 
-    if (desc) {
-      return <Text style={styles.desc}>{desc}</Text>;
+    if (description) {
+      return <Text style={styles.desc}>{description}</Text>;
     }
     return null;
   };

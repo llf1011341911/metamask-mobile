@@ -1907,6 +1907,11 @@
     "trust_admin": "Trust Admin",
     "trust_admin_tips": "打开此选项时，当用户丢失账户私钥，可以使用注册邮箱向 admin@world-website。com发送邮件提交申请，由Admin更改账户的权限设置，从而找回账户",
     "trust_world": "Trust World",
-    "trust_world_tips": "打开此选项，账户授权World中所有设置为trust的合约访问 World中的各种资产，无需单独Approve操作"
+    "trust_world_tips": "打开此选项，账户授权World中所有设置为trust的合约访问 World中的各种资产，无需单独Approve操作",
+    "wallet_choose_section":"选择钱包",
+    "entrance_games":"进入游戏",
+    "change_wallet_and_entrance_games":"切换钱包并进入游戏",
+    "include_games_account":"游戏账户",
+    "un_include_games_account":"无游戏账户"
   }
 }

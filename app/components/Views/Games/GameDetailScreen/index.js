@@ -8,14 +8,26 @@ import {
 } from 'react-native';
 import PropTypes, { string } from 'prop-types';
 import { connect } from 'react-redux';
+import { util } from '@metamask/controllers';
 import { getNetworkNavbarOptions } from '../../../UI/Navbar';
 import Engine from '../../../../core/Engine';
 import { ThemeContext, mockTheme } from '../../../../util/theme';
-import GamesDetailAccountView from '../../../UI/Games/GamesDetailAccountView';
+import AccountGamesList from '../../../UI/AccountGamesList';
 import GamesDetailHeader from '../../../UI/Games/GamesDetailHeader';
-import GamesDetailTrustAdminView from "../../../UI/Games/GamesDetailTrustAdminView";
+import GamesDetailTrustAdminView from '../../../UI/Games/GamesDetailTrustAdminView';
 import { strings } from '../../../../../locales/i18n';
-import { getGamesDetail } from "../../../UI/Games/fetch";
+import { getGamesDetail } from '../../../UI/Games/fetch';
+
+import { renderFromWei } from '../../../../util/number';
+import { doENSLookup, doENSReverseLookup } from '../../../../util/ENSUtils';
+import { getTicker, getEther } from '../../../../util/transactions';
+import {
+  setSelectedAsset,
+  setRecipient,
+  newAssetTransaction,
+} from '../../../../actions/transaction';
+
+const { hexToBN } = util;
 
 const createStyles = (colors) =>
   StyleSheet.create({
@@ -41,6 +53,7 @@ const createStyles = (colors) =>
  */
 class GamesDetailScreen extends PureComponent {
   static propTypes = {
+    accounts: PropTypes.object,
     /**
     /* navigation object required to access the props
     /* passed by the parent component
@@ -63,6 +76,14 @@ class GamesDetailScreen extends PureComponent {
      */
     selectedAddress: PropTypes.string,
     /**
+     * List of keyrings
+     */
+    keyrings: PropTypes.array,
+    /**
+     * Current provider ticker
+     */
+    ticker: PropTypes.string,
+    /**
      * A string representing the network name
      */
     chainId: PropTypes.string,
@@ -83,12 +104,20 @@ class GamesDetailScreen extends PureComponent {
      * Object that represents the current route info like params passed to it
      */
     route: PropTypes.object,
+    /**
+     * Set selected in transaction state
+     */
+    setSelectedAsset: PropTypes.func,
   };
 
   state = {
+    balanceIsZero: false,
     refreshing: false,
     loading: false,
+    fromSelectedAddress: this.props.selectedAddress,
     detailData: this.props.route.params?.data ?? {},
+    fromAccountName: this.props.identities[this.props.selectedAddress].name,
+    fromAccountBalance: undefined,
   };
 
   updateNavBar = () => {
@@ -105,39 +134,37 @@ class GamesDetailScreen extends PureComponent {
     );
   };
 
-  componentDidMount() {
-    this.updateNavBar();
+  componentDidMount =async()=> {
     setTimeout(() => {
-      this.getDetail()
+      this.getDetail();
     }, 100);
+    this.updateNavBar();
+   
   }
 
   getDetail = async () => {
-    const { detailData } = this.state
+    const { detailData } = this.state;
     if (detailData.id == null) {
-      return
+      return;
     }
     this.setState({
-      loading: true
-    })
+      loading: true,
+    });
     try {
-      const detail = await getGamesDetail(detailData.id, '0x8e559d60c0bdb1c2946e16f92d1c5d82b9ace25b')
-      console.log("详情返回" + JSON.stringify(detail))
+      const detail = await getGamesDetail(detailData.world,detailData.metaverseAddress,detailData.metaverseUrl);
       this.setState({
         detailData: {
           ...detailData,
-          ...detail
+          ...detail,
         },
-        loading: false
-      })
+        loading: false,
+      });
     } catch (error) {
-      console.log("详情返回" + error)
       this.setState({
-        loading: false
-      })
+        loading: false,
+      });
     }
-
-  }
+  };
 
   componentDidUpdate(prevProps) {
     this.updateNavBar();
@@ -164,10 +191,36 @@ class GamesDetailScreen extends PureComponent {
     );
   };
 
+  onAccountChange = async (accountAddress) => {
+    this.setState({
+      fromSelectedAddress: accountAddress
+    })
+    const { identities, ticker, accounts } = this.props;
+    const { name } = identities[accountAddress];
+    const { PreferencesController } = Engine.context;
+    const fromAccountBalance = `${renderFromWei(
+      accounts[accountAddress].balance,
+    )} ${getTicker(ticker)}`;
+    const ens = await doENSReverseLookup(accountAddress);
+    const fromAccountName = ens || name;
+    PreferencesController.setSelectedAddress(accountAddress);
+    // If new account doesn't have the asset
+    this.props.setSelectedAsset(getEther(ticker));
+    this.setState({
+      fromAccountName,
+      fromAccountBalance,
+      fromSelectedAddress: accountAddress,
+      balanceIsZero: hexToBN(accounts[accountAddress].balance).isZero(),
+    });
+  };
+
   render = () => {
-    const { loading, detailData } = this.state;
+    const { loading, detailData, fromSelectedAddress } = this.state;
     const colors = this.context.colors || mockTheme.colors;
     const styles = createStyles(colors);
+
+    const { identities, keyrings, ticker } = this.props;
+
 
     return (
       <View style={styles.wrapper}>
@@ -177,28 +230,30 @@ class GamesDetailScreen extends PureComponent {
           <ScrollView>
             <View>
               <GamesDetailHeader
-                website={detailData.world.homepage}
-                headerIcon={detailData.world.icon}
-                desc={detailData.desc}
+                website={detailData.url}
+                headerIcon={detailData.icon}
+                desc={detailData.description}
                 context={this.context}
               />
 
               <View style={{ marginTop: 20 }} />
-              <GamesDetailAccountView
-                accountId={detailData.id + '@' + detailData.world.name}
-                email={detailData.email}
-                address={detailData.address}
-                context={this.context}
-              />
-              <GamesDetailTrustAdminView
-                title={strings('games.trust_admin')}
-                switchValue={false}
-                tips={strings('games.trust_admin_tips')}
-              />
-              <GamesDetailTrustAdminView
-                title={strings('games.trust_world')}
-                switchValue={detailData.trustWorld}
-                tips={strings('games.trust_world_tips')}
+              <AccountGamesList
+                enableAccountsAddition={false}
+                identities={identities}
+                metaverseUrl={detailData.metaverseUrl}
+                openBrower ={url =>{
+                  this.props.navigation.navigate('BrowserHome', {
+                    screen: "BrowserView",
+                    params:{
+                      newTabUrl: url,
+                      timestamp: Date.now(),
+                    }
+                  });
+                }}
+                selectedAddress={fromSelectedAddress}
+                keyrings={keyrings}
+                onAccountChange={this.onAccountChange}
+                ticker={ticker}
               />
             </View>
           </ScrollView>
@@ -211,6 +266,7 @@ class GamesDetailScreen extends PureComponent {
 GamesDetailScreen.contextType = ThemeContext;
 
 const mapStateToProps = (state) => ({
+  accounts: state.engine.backgroundState.AccountTrackerController.accounts,
   swapsTransactions:
     state.engine.backgroundState.TransactionController.swapsTransactions || {},
   conversionRate:
@@ -226,4 +282,9 @@ const mapStateToProps = (state) => ({
   thirdPartyApiMode: state.privacy.thirdPartyApiMode,
 });
 
-export default connect(mapStateToProps)(GamesDetailScreen);
+const mapDispatchToProps = (dispatch) => ({
+  setSelectedAsset: (selectedAsset) =>
+    dispatch(setSelectedAsset(selectedAsset)),
+});
+
+export default connect(mapStateToProps,mapDispatchToProps)(GamesDetailScreen);

@@ -142,6 +142,8 @@ class GamesListScreen extends PureComponent {
             selectedAddress={selectedAddress}
             conversionRate={conversionRate}
             currentCurrency={currentCurrency}
+            metaverseAddress = {params.metaverseAddress}
+            metaverseUrl = {params.metaverseUrl}
             networkType={chainId}
           />
       </View>
