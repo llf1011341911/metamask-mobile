@@ -279,7 +279,7 @@ class AccountOverview extends PureComponent {
   async initAllowGames() {
     //request Games config
     const { chainId } = this.props;
-    const result = await getGamesConfig("0x61");
+    const result = await getGamesConfig(chainId);
     console.log("数据返回" + JSON.stringify(result))
     if (result != null && result.data != null && result.status == 200) {
       const { urls, metaverse } = result.data

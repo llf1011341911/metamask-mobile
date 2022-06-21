@@ -62,8 +62,8 @@ export default {
     POLLING_FREQUENCY: 10000,
   },
   GAMES:{
-    GAMES_API_URL_PRODUCTION:"http://api.gonwallet.io/",
-    GAMES_API_URL_STAGING:"http://api.gonwallet.io/",
+    GAMES_API_URL_PRODUCTION:"https://api.gonwallet.io/",
+    GAMES_API_URL_STAGING:"https://api.gonwallet.io/",
     WEB3:"https://data-seed-prebsc-1-s1.binance.org:8545"
   },
   DEEPLINKS: {
