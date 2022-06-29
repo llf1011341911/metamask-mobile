@@ -216,14 +216,14 @@ class OnboardingCarousel extends PureComponent {
                           {strings(`onboarding_carousel.subtitle${key}`)}
                         </Text>
                       </View>
-                      <View style={styles.carouselImageWrapper}>
+                      {/* <View style={styles.carouselImageWrapper}>
                         <Image
                           source={carousel_images[index]}
                           style={[styles.carouselImage, styles[imgStyleKey]]}
                           resizeMethod={'auto'}
                           testID={`carousel-${value}-image`}
                         />
-                      </View>
+                      </View> */}
                     </View>
                   );
                 })}

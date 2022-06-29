@@ -817,13 +817,14 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = CEBDB50281E3230DEEC32937 /* Pods-MetaMask.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_OPTIMIZATION = time;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = MetaMask/MetaMaskDebug.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 877;
+				CURRENT_PROJECT_VERSION = 4;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = 7H4D9GC6CG;
@@ -859,7 +860,7 @@
 					"\"$(SRCROOT)/MetaMask/System/Library/Frameworks\"",
 				);
 				LLVM_LTO = YES;
-				MARKETING_VERSION = 5.0.1;
+				MARKETING_VERSION = 2.0.1;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CFLAGS = (
 					"$(inherited)",
@@ -884,13 +885,14 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = F1857854610FB89EA41B3134 /* Pods-MetaMask.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_OPTIMIZATION = time;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = MetaMask/MetaMask.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 877;
+				CURRENT_PROJECT_VERSION = 4;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = D2GB2M8C86;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -925,7 +927,7 @@
 					"\"$(SRCROOT)/MetaMask/System/Library/Frameworks\"",
 				);
 				LLVM_LTO = YES;
-				MARKETING_VERSION = 5.0.1;
+				MARKETING_VERSION = 2.0.1;
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_CFLAGS = (
 					"$(inherited)",
@@ -949,6 +951,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 15FDD82721B7642B006B7C35 /* debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
@@ -992,6 +995,7 @@
 		83CBBA211A601CBA00E9B192 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
