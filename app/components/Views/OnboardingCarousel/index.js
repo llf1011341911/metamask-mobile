@@ -23,6 +23,7 @@ import AnalyticsV2, { ANALYTICS_EVENTS_V2 } from '../../../util/analyticsV2';
 import DefaultPreference from 'react-native-default-preference';
 import { METRICS_OPT_IN } from '../../../constants/storage';
 import { ThemeContext, mockTheme } from '../../../util/theme';
+import Engine from '../../../core/Engine';
 
 const IMAGE_3_RATIO = 215 / 315;
 const IMAGE_2_RATIO = 222 / 239;
@@ -136,7 +137,7 @@ class OnboardingCarousel extends PureComponent {
   };
 
   state = {
-    currentTab: 1,
+    currentTab: 1
   };
 
   trackEvent = (eventArgs) => {
@@ -176,17 +177,58 @@ class OnboardingCarousel extends PureComponent {
   componentDidMount = () => {
     this.updateNavBar();
     this.trackEvent(ANALYTICS_EVENTS_V2.ONBOARDING_WELCOME_MESSAGE_VIEWED);
+    this.addBSCMainnet();
+    this.addBSCTestnet();
+    this.setRpcTarget();
   };
 
   componentDidUpdate = () => {
     this.updateNavBar();
   };
 
+  addBSCMainnet = () => {
+    const { PreferencesController } = Engine.context;
+    console.log("addBSCMainnet");
+    PreferencesController.addToFrequentRpcList(
+      "https://bsc-dataseed1.binance.org",
+      "56",
+      "BNB",
+      "Binance Smart Chain Mainnet",
+      {
+        "blockExplorerUrl": "https://bscscan.com",
+      },
+    );
+  };
+
+  addBSCTestnet = async () => {
+    const { PreferencesController } = Engine.context;
+    console.log("addBSCTestnet");
+    PreferencesController.addToFrequentRpcList(
+      "https://data-seed-prebsc-1-s3.binance.org:8545",
+      "97",
+      "BNB",
+      "Binance Smart Chain Testnet",
+      {
+        "blockExplorerUrl": "https://testnet.bscscan.com/",
+      },
+    );
+  };
+
+  setRpcTarget = async () => {
+    const { NetworkController } = Engine.context;
+    NetworkController.setRpcTarget(
+      "https://bsc-dataseed1.binance.org",
+      "56",
+      "BNB",
+      "Binance Smart Chain Mainnet",
+    );
+  }
+
   render() {
     const { currentTab } = this.state;
     const colors = this.context.colors || mockTheme.colors;
     const styles = createStyles(colors);
-
+    console.log("addBSCTestnet render");
     return (
       <View style={baseStyles.flexGrow} testID={'onboarding-carousel-screen'}>
         <OnboardingScreenWithBg screen={'carousel'}>

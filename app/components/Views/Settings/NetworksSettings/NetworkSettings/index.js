@@ -372,6 +372,7 @@ class NetworkSettings extends PureComponent {
       CurrencyRateController.setNativeCurrency(ticker);
       // Remove trailing slashes
       const formattedHref = url.href.replace(/\/+$/, '');
+      console.log("测试赛所所所所所所所所所所所所所所所所所所所所所所" + "formattedHref:" + formattedHref + "decimalChainId:" + decimalChainId + "ticker:" + ticker + "nickname:" + nickname + "blockExplorerUrl:" + blockExplorerUrl);
       PreferencesController.addToFrequentRpcList(
         formattedHref,
         decimalChainId,
