@@ -1011,6 +1011,7 @@ export function getWalletNavbarOptions(
   navigation,
   drawerRef,
   themeColors,
+  showQR
 ) {
   const innerStyles = StyleSheet.create({
     headerStyle: {
@@ -1094,7 +1095,7 @@ export function getWalletNavbarOptions(
         />
       </TouchableOpacity>
     ),
-    headerRight: () => (
+    headerRight: showQR?() => (
       <TouchableOpacity
         style={styles.infoButton}
         // eslint-disable-next-line
@@ -1102,7 +1103,7 @@ export function getWalletNavbarOptions(
       >
         <AntIcon name="scan1" size={28} style={innerStyles.headerIcon} />
       </TouchableOpacity>
-    ),
+    ):null,
     headerStyle: innerStyles.headerStyle,
     headerTintColor: themeColors.primary.default,
   };

@@ -280,34 +280,33 @@ class AccountOverview extends PureComponent {
     //request Games config
     const { chainId } = this.props;
     const result = await getGamesConfig(chainId);
-    console.log("数据返回" + JSON.stringify(result))
+    console.log('数据返回' + JSON.stringify(result));
     if (result != null && result.data != null && result.status == 200) {
-      const { urls, metaverse } = result.data
+      const { urls, metaverse } = result.data;
       if (!urls || !metaverse || urls.length == 0) {
         this.setState({
-          showGamesEntrance: false
-        })
+          showGamesEntrance: false,
+        });
         return;
       }
       this.setState({
         metaverseAddress: metaverse,
-        metaverseUrl: urls[0]
-      })
+        metaverseUrl: urls[0],
+      });
       const worldCount = await allowGames(
         this.state.metaverseAddress,
         this.state.metaverseUrl,
       );
       if (worldCount > 0) {
         this.setState({
-          showGamesEntrance: true
-        })
+          showGamesEntrance: true,
+        });
       } else {
         this.setState({
-          showGamesEntrance: false
-        })
+          showGamesEntrance: false,
+        });
       }
     }
-
   }
 
   setAccountLabel = () => {
@@ -396,7 +395,7 @@ class AccountOverview extends PureComponent {
       const ens = await doENSReverseLookup(account.address, network);
       this.setState({ ens });
       // eslint-disable-next-line no-empty
-    } catch { }
+    } catch {}
   };
 
   render() {
@@ -406,7 +405,6 @@ class AccountOverview extends PureComponent {
       onboardingWizard,
       chainId,
       swapsIsLive,
-
     } = this.props;
     const colors = this.context.colors || mockTheme.colors;
     const themeAppearance = this.context.themeAppearance || 'light';
@@ -418,7 +416,8 @@ class AccountOverview extends PureComponent {
     )}`;
 
     if (!address) return null;
-    const { accountLabelEditable, accountLabel, ens, showGamesEntrance } = this.state;
+    const { accountLabelEditable, accountLabel, ens, showGamesEntrance } =
+      this.state;
 
     const isQRHardwareWalletAccount = isQRHardwareAccount(address);
 
@@ -525,35 +524,34 @@ class AccountOverview extends PureComponent {
                 onPress={this.onReceive}
                 label={strings('asset_overview.receive_button')}
               />
-              {allowedToBuy(chainId) && (
+              {/* {allowedToBuy(chainId) && (
                 <AssetActionButton
                   icon="buy"
                   onPress={this.onBuy}
                   label={strings('asset_overview.buy_button')}
                 />
-              )}
+              )} */}
               <AssetActionButton
                 testID={'token-send-button'}
                 icon="send"
                 onPress={this.onSend}
                 label={strings('asset_overview.send_button')}
               />
-              {AppConstants.SWAPS.ACTIVE && (
+              {/* {AppConstants.SWAPS.ACTIVE && (
                 <AssetSwapButton
                   isFeatureLive={swapsIsLive}
                   isNetworkAllowed={isSwapsAllowed(chainId)}
                   onPress={this.goToSwaps}
                   isAssetAllowed
                 />
-              )}
+              )} */}
               {/* add games */}
-              {showGamesEntrance && (
-                <AssetActionButton
-                  icon="buy"
-                  onPress={this.onGames}
-                  label={strings('asset_overview.games_button')}
-                />
-              )}
+              <AssetActionButton
+                icon="buy"
+                disabled={!showGamesEntrance}
+                onPress={this.onGames}
+                label={strings('asset_overview.games_button')}
+              />
             </View>
           </View>
         </ScrollView>

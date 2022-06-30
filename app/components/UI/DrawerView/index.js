@@ -76,6 +76,8 @@ import {
   networkSwitched,
 } from '../../../actions/onboardNetwork';
 
+import {requestEntrance} from "../../../api/entrance/index"
+
 const createStyles = (colors) =>
   StyleSheet.create({
     wrapper: {
@@ -460,6 +462,7 @@ class DrawerView extends PureComponent {
     networkCurrency: undefined,
     showModal: false,
     networkUrl: undefined,
+    showBrower:false
   };
 
   browserSectionRef = React.createRef();
@@ -513,6 +516,14 @@ class DrawerView extends PureComponent {
         </Text>
       </View>
     ) : null;
+  }
+
+  componentDidMount(){
+    requestEntrance(data=>{
+      this.setState({
+        showBrower:data
+      })
+    })
   }
 
   async componentDidUpdate() {
@@ -1184,6 +1195,7 @@ class DrawerView extends PureComponent {
       account: { name: nameFromState, ens: ensFromState },
       showModal,
       networkType,
+      showBrower
     } = this.state;
 
     const account = {
@@ -1323,6 +1335,7 @@ class DrawerView extends PureComponent {
                         return true;
                       })
                       .map((item, j) => (
+                        item.name === strings('drawer.browser') && showBrower ?
                         <TouchableOpacity
                           key={`item_${i}_${j}`}
                           style={[
@@ -1364,7 +1377,49 @@ class DrawerView extends PureComponent {
                               </Text>
                             </SettingsNotification>
                           ) : null}
-                        </TouchableOpacity>
+                        </TouchableOpacity>:item.name !== strings('drawer.browser') ?
+                        <TouchableOpacity
+                          key={`item_${i}_${j}`}
+                          style={[
+                            styles.menuItem,
+                            item.routeNames &&
+                              item.routeNames.includes(currentRoute)
+                              ? styles.selectedRoute
+                              : null,
+                          ]}
+                          ref={
+                            item.name === strings('drawer.browser') &&
+                            this.browserSectionRef
+                          }
+                          onPress={() => item.action()} // eslint-disable-line
+                        >
+                          {item.icon
+                            ? item.routeNames &&
+                              item.routeNames.includes(currentRoute)
+                              ? item.selectedIcon
+                              : item.icon
+                            : null}
+                          <Text
+                            style={[
+                              styles.menuItemName,
+                              !item.icon ? styles.noIcon : null,
+                              item.routeNames &&
+                                item.routeNames.includes(currentRoute)
+                                ? styles.selectedName
+                                : null,
+                            ]}
+                            numberOfLines={1}
+                          >
+                            {item.name}
+                          </Text>
+                          {!seedphraseBackedUp && item.warning ? (
+                            <SettingsNotification isNotification isWarning>
+                              <Text style={styles.menuItemWarningText}>
+                                {item.warning}
+                              </Text>
+                            </SettingsNotification>
+                          ) : null}
+                        </TouchableOpacity>:null
                       ))}
                   </View>
                 ),
