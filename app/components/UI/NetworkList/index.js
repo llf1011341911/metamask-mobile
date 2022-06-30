@@ -370,7 +370,7 @@ export class NetworkList extends PureComponent {
           </Text>
         </View>
         <ScrollView style={styles.networksWrapper} testID={NETWORK_SCROLL_ID}>
-          {this.renderMainnet()}
+          {/* {this.renderMainnet()}
           <View style={styles.otherNetworksHeader}>
             <Text
               style={styles.otherNetworksText}
@@ -378,8 +378,8 @@ export class NetworkList extends PureComponent {
             >
               {strings('networks.other_networks')}
             </Text>
-          </View>
-          {this.renderOtherNetworks()}
+          </View> */}
+          {/* {this.renderOtherNetworks()} */}
           {this.renderRpcNetworks()}
         </ScrollView>
         <View style={styles.footer}>

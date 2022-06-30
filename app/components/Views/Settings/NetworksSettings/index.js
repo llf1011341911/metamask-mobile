@@ -163,7 +163,7 @@ class NetworksSettings extends PureComponent {
       <TouchableOpacity
         key={`network-${i}`}
         onPress={() => this.onPress(network)} // eslint-disable-line
-        onLongPress={() => isCustomRPC && this.showRemoveMenu(network)} // eslint-disable-line
+        // onLongPress={() => isCustomRPC && this.showRemoveMenu(network)} // eslint-disable-line
         testID={'select-network'}
       >
         <View style={styles.network}>
@@ -205,9 +205,9 @@ class NetworksSettings extends PureComponent {
     if (frequentRpcList.length > 0) {
       return (
         <View testID={'rpc-networks'}>
-          <Text style={styles.sectionLabel}>
+          {/* <Text style={styles.sectionLabel}>
             {strings('app_settings.network_rpc_networks')}
-          </Text>
+          </Text> */}
           {this.renderRpcNetworks()}
         </View>
       );
@@ -247,11 +247,11 @@ class NetworksSettings extends PureComponent {
     return (
       <View style={styles.wrapper} testID={'networks-screen'}>
         <ScrollView style={styles.networksWrapper}>
-          {this.renderMainnet()}
-          <Text style={styles.sectionLabel}>
+          {/* {this.renderMainnet()} */}
+          {/* <Text style={styles.sectionLabel}>
             {strings('app_settings.network_other_networks')}
-          </Text>
-          {this.renderOtherNetworks()}
+          </Text> */}
+          {/* {this.renderOtherNetworks()} */}
           {this.renderRpcNetworksView()}
         </ScrollView>
         <StyledButton
