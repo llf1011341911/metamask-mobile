@@ -97,6 +97,7 @@ const CollectibleContracts = ({
   useCollectibleDetection,
   setNftDetectionDismissed,
   nftDetectionDismissed,
+  show,
 }) => {
   const { colors } = useAppThemeFromContext() || mockTheme;
   const styles = createStyles(colors);
@@ -255,7 +256,7 @@ const CollectibleContracts = ({
     <View style={styles.wrapper} testID={'collectible-contracts'}>
       {isMainNet(chainId) &&
         !nftDetectionDismissed &&
-        !useCollectibleDetection && (
+        !useCollectibleDetection && show &&(
           <View style={styles.emptyView}>
             <CollectibleDetectionModal
               onDismiss={dismissNftInfo}
@@ -263,7 +264,7 @@ const CollectibleContracts = ({
             />
           </View>
         )}
-      {collectibleContracts.length > 0 ? renderList() : renderEmpty()}
+      {collectibleContracts.length > 0 ? renderList() : show?renderEmpty():null}
       {renderFooter()}
     </View>
   );
@@ -311,6 +312,8 @@ CollectibleContracts.propTypes = {
    * State to manage display of modal
    */
   nftDetectionDismissed: PropTypes.bool,
+
+  show:PropTypes.bool
 };
 
 const mapStateToProps = (state) => ({

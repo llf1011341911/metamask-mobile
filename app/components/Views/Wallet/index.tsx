@@ -31,6 +31,7 @@ import OnboardingWizard from '../../UI/OnboardingWizard';
 import ErrorBoundary from '../ErrorBoundary';
 import { DrawerContext } from '../../Nav/Main/MainNavigator';
 import { useAppThemeFromContext, mockTheme } from '../../../util/theme';
+import {requestEntrance} from "../../../api/entrance/index"
 
 const createStyles = (colors: any) =>
   StyleSheet.create({
@@ -67,6 +68,7 @@ const createStyles = (colors: any) =>
 const Wallet = ({ navigation }: any) => {
   const { drawerRef } = useContext(DrawerContext);
   const [refreshing, setRefreshing] = useState(false);
+  const [showEntrance,setShowEntrance] = useState(false);
   const accountOverviewRef = useRef(null);
   const { colors } = useAppThemeFromContext() || mockTheme;
   const styles = createStyles(colors);
@@ -149,10 +151,17 @@ const Wallet = ({ navigation }: any) => {
         navigation,
         drawerRef,
         themeColors,
+        showEntrance
       ),
     );
     /* eslint-disable-next-line */
-  }, [navigation, themeColors]);
+  }, [navigation, themeColors,showEntrance]);
+
+  useEffect (()=>{
+    requestEntrance(data=>{
+      setShowEntrance(data)
+    })
+  },[setShowEntrance]);
 
   const onRefresh = useCallback(async () => {
     requestAnimationFrame(async () => {
@@ -255,6 +264,7 @@ const Wallet = ({ navigation }: any) => {
           <CollectibleContracts
             tabLabel={strings('wallet.collectibles')}
             key={'nfts-tab'}
+            show = {showEntrance}
             navigation={navigation}
           />
         </ScrollableTabView>
