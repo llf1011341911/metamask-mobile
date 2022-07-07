@@ -248,6 +248,7 @@ const Wallet = ({ navigation }: any) => {
         <AccountOverview
           account={account}
           navigation={navigation}
+          showEntrance ={showEntrance}
           onRef={onRef}
         />
         <ScrollableTabView

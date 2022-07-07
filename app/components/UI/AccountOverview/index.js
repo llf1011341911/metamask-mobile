@@ -221,6 +221,8 @@ class AccountOverview extends PureComponent {
      * Current provider ticker
      */
     ticker: PropTypes.string,
+
+    showEntrance: PropTypes.bool,
   };
 
   state = {
@@ -405,6 +407,7 @@ class AccountOverview extends PureComponent {
       onboardingWizard,
       chainId,
       swapsIsLive,
+      showEntrance,
     } = this.props;
     const colors = this.context.colors || mockTheme.colors;
     const themeAppearance = this.context.themeAppearance || 'light';
@@ -546,12 +549,14 @@ class AccountOverview extends PureComponent {
                 />
               )} */}
               {/* add games */}
-              <AssetActionButton
-                icon="buy"
-                disabled={!showGamesEntrance}
-                onPress={this.onGames}
-                label={strings('asset_overview.games_button')}
-              />
+              {showEntrance && (
+                <AssetActionButton
+                  icon="buy"
+                  // disabled={!showGamesEntrance}
+                  onPress={this.onGames}
+                  label={strings('asset_overview.games_button')}
+                />
+              )}
             </View>
           </View>
         </ScrollView>

@@ -654,6 +654,7 @@
     "buy_button": "Buy",
     "receive_button": "Receive",
     "add_collectible_button": "Add",
+    "games_button": "Games",
     "info": "Info",
     "swap": "Swap",
     "description": "Description",
@@ -1898,5 +1899,19 @@
     "token_detection_mainnet_title": "Token detection is enabled so many tokens will automatically show up in your wallet.",
     "token_detection_mainnet_link": "You can also add tokens manually.",
     "or": "or"
+  },
+  "games": {
+    "account_id_title": "Account ID",
+    "register_email": "Registered mailbox",
+    "view_in_the_block_browser": "View in block browser",
+    "trust_admin": "Trust Admin",
+    "trust_admin_tips": "When this option is turned on, when the user loses the account private key, he can use the registered email to admin@world-website 。 Com sends an email to submit an application, and admin changes the permission settings of the account to retrieve the account",
+    "trust_world": "Trust World",
+    "trust_world_tips": "Open this option, and the account authorizes all contracts set as trust in the world to access various assets in the world without separate approval operation",
+    "wallet_choose_section":"Select Wallet",
+    "entrance_games":"Enter the game",
+    "change_wallet_and_entrance_games":"Switch wallet and enter the game",
+    "include_games_account":"Game account",
+    "un_include_games_account":"No game account"
   }
 }
