@@ -15,7 +15,6 @@ import {
   TX_PENDING,
   TX_CONFIRMED,
 } from '../../../../constants/transaction';
-import AssetOverview from '../../../UI/AssetOverview';
 import Games from '../../../UI/Games';
 import { getNetworkNavbarOptions } from '../../../UI/Navbar';
 import Engine from '../../../../core/Engine';

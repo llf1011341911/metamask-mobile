@@ -173,6 +173,8 @@ class AssetOverview extends PureComponent {
      * Object that contains tokens by token addresses as key
      */
     tokenList: PropTypes.object,
+
+    showEntrance:PropTypes.bool
   };
 
   onReceive = () => {
@@ -289,6 +291,7 @@ class AssetOverview extends PureComponent {
       chainId,
       swapsIsLive,
       swapsTokens,
+      showEntrance
     } = this.props;
     const colors = this.context.colors || mockTheme.colors;
     const styles = createStyles(colors);
@@ -354,25 +357,33 @@ class AssetOverview extends PureComponent {
               onPress={this.onReceive}
               label={strings('asset_overview.receive_button')}
             />
-            {isETH && allowedToBuy(chainId) && (
+            {/* {isETH && allowedToBuy(chainId) && (
               <AssetActionButton
                 icon="buy"
                 onPress={this.onBuy}
                 label={strings('asset_overview.buy_button')}
               />
-            )}
+            )} */}
             <AssetActionButton
               testID={'token-send-button'}
               icon="send"
               onPress={this.onSend}
               label={strings('asset_overview.send_button')}
             />
-            {AppConstants.SWAPS.ACTIVE && (
+            {/* {AppConstants.SWAPS.ACTIVE && (
               <AssetSwapButton
                 isFeatureLive={swapsIsLive}
                 isNetworkAllowed={isSwapsAllowed(chainId)}
                 isAssetAllowed={isETH || address?.toLowerCase() in swapsTokens}
                 onPress={this.goToSwaps}
+              />
+            )} */}
+            {showEntrance && (
+              <AssetActionButton
+                icon="buy"
+                // disabled={!showGamesEntrance}
+                onPress={this.onGames}
+                label={strings('asset_overview.games_button')}
               />
             )}
           </View>

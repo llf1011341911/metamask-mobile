@@ -24,6 +24,7 @@ import { safeToChecksumAddress } from '../../../util/address';
 import { addAccountTimeFlagFilter } from '../../../util/transactions';
 import { toLowerCaseEquals } from '../../../util/general';
 import { ThemeContext, mockTheme } from '../../../util/theme';
+import {requestEntrance} from "../../../api/entrance/index"
 
 const createStyles = (colors) =>
   StyleSheet.create({
@@ -100,6 +101,7 @@ class Asset extends PureComponent {
     submittedTxs: [],
     confirmedTxs: [],
     transactions: [],
+    showEntrance:false
   };
 
   txs = [];
@@ -136,6 +138,13 @@ class Asset extends PureComponent {
     } else {
       this.filter = this.ethFilter;
     }
+
+    requestEntrance(data=>{
+      this.setState({
+        showEntrance:data
+      })
+    })
+
   }
 
   componentDidUpdate(prevProps) {
@@ -343,6 +352,7 @@ class Asset extends PureComponent {
       submittedTxs,
       confirmedTxs,
       transactionsUpdated,
+      showEntrance
     } = this.state;
     const {
       route: { params },
@@ -366,6 +376,7 @@ class Asset extends PureComponent {
                 <AssetOverview
                   navigation={navigation}
                   asset={navigation && params}
+                  showEntrance={showEntrance}
                 />
               </View>
             }
